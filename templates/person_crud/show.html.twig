@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Person{% endblock %}
+
+{% block body %}
+    <h1>Person</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ person.id }}</td>
+            </tr>
+            <tr>
+                <th>FullName</th>
+                <td>{{ person.FullName }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ person.Email }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>{{ person.Password }}</td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td>{{ person.Gender }}</td>
+            </tr>
+            <tr>
+                <th>Nationalite</th>
+                <td>{{ person.Nationalite }}</td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>{{ person.Role }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ person.CreatedAt ? person.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>HasPlaces</th>
+                <td>{{ person.HasPlaces ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsPartner</th>
+                <td>{{ person.IsPartner ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Balance</th>
+                <td>{{ person.Balance }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_person_crud_index') }}">back to list</a>
+
+    <a href="{{ path('app_person_crud_edit', {'id': person.id}) }}">edit</a>
+
+    {{ include('person_crud/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Attachement index{% endblock %}
+
+{% block body %}
+    <h1>Attachement index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Path</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for attachement in attachements %}
+            <tr>
+                <td>{{ attachement.id }}</td>
+                <td>{{ attachement.Name }}</td>
+                <td>{{ attachement.Path }}</td>
+                <td>
+                    <a href="{{ path('app_attachement_show', {'id': attachement.id}) }}">show</a>
+                    <a href="{{ path('app_attachement_edit', {'id': attachement.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_attachement_new') }}">Create new</a>
+{% endblock %}
