@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Place index{% endblock %}
+
+{% block body %}
+    <h1>Place index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Adress</th>
+                <th>City</th>
+                <th>PostalCode</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Notice</th>
+                <th>Status</th>
+                <th>Type</th>
+                <th>Views</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for place in places %}
+            <tr>
+                <td>{{ place.id }}</td>
+                <td>{{ place.Name }}</td>
+                <td>{{ place.Description }}</td>
+                <td>{{ place.Adress }}</td>
+                <td>{{ place.City }}</td>
+                <td>{{ place.PostalCode }}</td>
+                <td>{{ place.Latitude }}</td>
+                <td>{{ place.Longitude }}</td>
+                <td>{{ place.Notice }}</td>
+                <td>{{ place.Status ? 'Yes' : 'No' }}</td>
+                <td>{{ place.Type }}</td>
+                <td>{{ place.Views }}</td>
+                <td>
+                    <a href="{{ path('app_place_show', {'id': place.id}) }}">show</a>
+                    <a href="{{ path('app_place_edit', {'id': place.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="13">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_place_new') }}">Create new</a>
+{% endblock %}
