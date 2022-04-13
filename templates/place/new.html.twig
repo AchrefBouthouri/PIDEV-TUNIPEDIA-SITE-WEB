@@ -2,10 +2,36 @@
 
 {% block title %}New Place{% endblock %}
 
-{% block body %}
-    <h1>Create new Place</h1>
+{% block content %}
+ <section class="w3ls-section contact py-5">
+	<div class="container py-sm-3">
+		<div class="w3ls-title">
+			<h2 class="heading text-center mb-sm-5 mb-4">Add new Place</h2>
+		</div>
+		<div class="w3ls_map">
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48306.05339877067!2d-74.245183970742!3d40.825144655510556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2555646a723a1%3A0x449f3366d017b214!2sMontclair%2C+NJ%2C+USA!5e0!3m2!1sen!2sin!4v1465991700675"></iframe>
+		</div>
 
-    {{ include('place/_form.html.twig') }}
-
-    <a href="{{ path('app_place_index') }}">back to list</a>
+		<div class="row contact_wthreerow agileits-w3layouts">
+		
+			<div class="col-lg-7 col-md-6 mt-md-0 mt-5 w3l_contact_form">
+				<h4>Place Details</h4>
+				{{ form_start(p,{'attr':{'novalidate': 'novalidate'}}) }}
+                        {{form_widget(p.Name,{'attr':{'placeholder' :'Place Name'}})}}
+                        {{form_widget(p.Description,{'attr':{'placeholder' :'Description'}})}}
+                        {{form_widget(p.Adress,{'attr':{'placeholder' :'Adress'}})}}
+                        {{form_widget(p.City,{'attr':{'placeholder' :'City'}})}}
+                        {{form_widget(p.PostalCode,{'attr':{'placeholder' :'Postal Code'}})}}
+                        {{form_widget(p.Latitude,{'attr':{'placeholder' :'Latitude'}})}}
+                        {{form_widget(p.Longitude,{'attr':{'placeholder' :'Longitude'}})}}
+                        {{form_widget(p.Type,{'attr':{'class':'form-control'}})}}
+                        {{form_widget(p.Category,{'attr':{'class':'form-control'}})}}
+                        <div style="margin-top:5px; ">
+                        {{form_widget(p.Ajouter,{'attr':{'class':'btn btn-warning'}})}}
+                        {{ form_end(p) }}
+                        </div>
+			</div>
+		</div>
+	</div>
+</section>
 {% endblock %}

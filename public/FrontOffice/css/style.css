@@ -899,7 +899,18 @@ section.middle-sec-agileinfo-w3ls h3.heading{
 	left: 6%;
 	width: 55px;
 	height: 55px;
-	background: #f2994a;
+	background: #0cd22d;
+	border-radius: 50px;
+	border: 2px solid #fff;
+	text-align: center;
+}
+.agile_services_grid_posPrivate {
+	position: absolute;
+	bottom: -13%;
+	left: 6%;
+	width: 55px;
+	height: 55px;
+	background: #ff0000;
 	border-radius: 50px;
 	border: 2px solid #fff;
 	text-align: center;
@@ -910,12 +921,18 @@ section.middle-sec-agileinfo-w3ls h3.heading{
 	color: #fff;
 	line-height: 2.5em;
 }
+.agile_services_grid_posPrivate i {
+	font-size: 1.3em;
+	color: #fff;
+	line-height: 2.5em;
+}
 
 .agile_services_grid figure {
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
 }
+
 
 
 /* Rotate */

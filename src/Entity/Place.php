@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PlaceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -88,11 +89,6 @@ class Place
      * @ORM\OneToMany(targetEntity=Attachement::class, mappedBy="no")
      */
     private $Attachement;
-
-    public function __construct()
-    {
-        $this->Attachement = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -255,33 +251,11 @@ class Place
         return $this;
     }
 
-    /**
-     * @return Collection<int, Attachement>
-     */
-    public function getAttachement(): Collection
+
+    public function getAttachement(): ?string 
     {
         return $this->Attachement;
+       // return new File($this->Attachement);
     }
 
-    public function addAttachement(Attachement $attachement): self
-    {
-        if (!$this->Attachement->contains($attachement)) {
-            $this->Attachement[] = $attachement;
-            $attachement->setPlace($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAttachement(Attachement $attachement): self
-    {
-        if ($this->Attachement->removeElement($attachement)) {
-            // set the owning side to null (unless already changed)
-            if ($attachement->getPlace() === $this) {
-                $attachement->setPlace(null);
-            }
-        }
-
-        return $this;
-    }
 }

@@ -26,7 +26,7 @@ class AttachementRepository extends ServiceEntityRepository
      * @throws OptimisticLockException
      */
     public function add(Attachement $entity, bool $flush = true): void
-    {
+    {   
         $this->_em->persist($entity);
         if ($flush) {
             $this->_em->flush();

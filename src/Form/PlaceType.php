@@ -3,9 +3,14 @@
 namespace App\Form;
 
 use App\Entity\Place;
+use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 
 class PlaceType extends AbstractType
 {
@@ -19,12 +24,19 @@ class PlaceType extends AbstractType
             ->add('PostalCode')
             ->add('Latitude')
             ->add('Longitude')
-            ->add('Notice')
-            ->add('Status')
-            ->add('Type')
-            ->add('Views')
-            ->add('Category')
-            ->add('CreatedBy')
+            ->add('Type', ChoiceType::class,[
+                'choices'  => [
+                    'Public' => "Public",
+                    'Private' => "Private",
+                ],
+                'multiple'=>false,
+                'expanded'=>false])
+            ->add('Category',EntityType::class,[
+                'class'=>Category::class,
+                'choice_label'=>'Name'
+          ])
+          ->add('Attachement', FileType::class)
+            
         ;
     }
 

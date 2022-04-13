@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Place;
+use App\Entity\Attachement;
 use App\Form\PlaceType;
 use App\Repository\PlaceRepository;
+use App\Repository\AttachementRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * @Route("/place")
@@ -28,20 +31,25 @@ class PlaceController extends AbstractController
     /**
      * @Route("/new", name="app_place_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, PlaceRepository $placeRepository): Response
+    public function new(Request $request, PlaceRepository $placeRepository , AttachementRepository $AttachementRepository): Response
     {
         $place = new Place();
+        $Attachement = new Attachement();
         $form = $this->createForm(PlaceType::class, $place);
+        $form->add('Ajouter',SubmitType::class); 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $placeRepository->add($place);
-            return $this->redirectToRoute('app_place_index', [], Response::HTTP_SEE_OTHER);
+           // $Attachement->setPlace($place);
+            $AttachementRepository->add($Attachement);
+            $this->addFlash('success','Your request sent successfully!');
+            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('place/new.html.twig', [
             'place' => $place,
-            'form' => $form,
+            'p' => $form,
         ]);
     }
 
