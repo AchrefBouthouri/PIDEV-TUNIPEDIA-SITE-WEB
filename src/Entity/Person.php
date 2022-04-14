@@ -4,11 +4,12 @@ namespace App\Entity;
 
 use App\Repository\PersonRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=PersonRepository::class)
  */
-class Person
+class Person implements UserInterface
 {
     /**
      * @ORM\Id
@@ -208,4 +209,29 @@ class Person
 
         return $this;
     }
+
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    public function getUsername()
+    {
+        // TODO: Implement getUsername() method.
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+    public function getRoles()
+    {
+        // TODO: Implement getRoles() method.
+    }
+
+    public function getUserIdentifier()
+    {
+        // TODO: Implement getUserIdentifier() method.
+    }
+
 }
