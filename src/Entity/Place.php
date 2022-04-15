@@ -5,7 +5,11 @@ namespace App\Entity;
 use App\Repository\PlaceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert ;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation\uploadable;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,26 +26,31 @@ class Place
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=5,max=30,minMessage="il faut au moin 5 carac",maxMessage="il faut au max 30 carac")
      */
     private $Name;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
      */
     private $Description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $Adress;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $City;
 
     /**
      * @ORM\Column(type="string", length=4)
+     * @Assert\Length(max=4,min=4)
      */
     private $PostalCode;
 
@@ -86,7 +95,8 @@ class Place
     private $CreatedBy;
 
     /**
-     * @ORM\OneToMany(targetEntity=Attachement::class, mappedBy="no")
+     * @ORM\OneToOne(targetEntity=Attachement::class, cascade={"persist", "remove"})
+     * @Vich\UploadableField(mapping="", fileNameProperty="image")
      */
     private $Attachement;
 
@@ -251,8 +261,13 @@ class Place
         return $this;
     }
 
+    public function setAttachement(?Attachement $Attachement): self
+    {
+        $this->Attachement = $Attachement;
 
-    public function getAttachement(): ?string 
+        return $this;
+    }
+    public function getAttachement(): ?Attachement 
     {
         return $this->Attachement;
        // return new File($this->Attachement);

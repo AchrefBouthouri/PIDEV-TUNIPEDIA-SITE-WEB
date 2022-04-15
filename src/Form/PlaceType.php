@@ -4,10 +4,12 @@ namespace App\Form;
 
 use App\Entity\Place;
 use App\Entity\Category;
+use App\Entity\Attachement;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
@@ -34,10 +36,8 @@ class PlaceType extends AbstractType
             ->add('Category',EntityType::class,[
                 'class'=>Category::class,
                 'choice_label'=>'Name'
-          ])
-          ->add('Attachement', FileType::class)
-            
-        ;
+            ]);
+        //  ->add('Attachement', FileType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

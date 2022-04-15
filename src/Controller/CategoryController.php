@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * @Route("/category")
@@ -20,9 +21,11 @@ class CategoryController extends AbstractController
      */
     public function index(CategoryRepository $categoryRepository): Response
     {
+        
         return $this->render('category/index.html.twig', [
             'categories' => $categoryRepository->findAll(),
         ]);
+        
     }
 
     /**
@@ -32,6 +35,7 @@ class CategoryController extends AbstractController
     {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
+        $form->add('Ajouter',SubmitType::class); 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -41,7 +45,7 @@ class CategoryController extends AbstractController
 
         return $this->renderForm('category/new.html.twig', [
             'category' => $category,
-            'form' => $form,
+            'c' => $form,
         ]);
     }
 

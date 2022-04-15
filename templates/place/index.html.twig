@@ -1,55 +1,76 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
-{% block title %}Place index{% endblock %}
+{% block content %}
 
-{% block body %}
-    <h1>Place index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Adress</th>
-                <th>City</th>
-                <th>PostalCode</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>Notice</th>
-                <th>Status</th>
-                <th>Type</th>
-                <th>Views</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for place in places %}
-            <tr>
-                <td>{{ place.id }}</td>
-                <td>{{ place.Name }}</td>
-                <td>{{ place.Description }}</td>
-                <td>{{ place.Adress }}</td>
-                <td>{{ place.City }}</td>
-                <td>{{ place.PostalCode }}</td>
-                <td>{{ place.Latitude }}</td>
-                <td>{{ place.Longitude }}</td>
-                <td>{{ place.Notice }}</td>
-                <td>{{ place.Status ? 'Yes' : 'No' }}</td>
-                <td>{{ place.Type }}</td>
-                <td>{{ place.Views }}</td>
-                <td>
-                    <a href="{{ path('app_place_show', {'id': place.id}) }}">show</a>
-                    <a href="{{ path('app_place_edit', {'id': place.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="13">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_place_new') }}">Create new</a>
+	<div class="row">
+		<div class="col-lg-8 d-flex flex-column">
+			<div class="row flex-grow">
+				<div class="col-12 grid-margin stretch-card">
+					<div class="card card-rounded">
+						<div class="card-body">
+							<div>
+								<div>
+									<h4 class="card-title card-title-dash">Place List</h4>
+								</div>
+								<div>
+									<a href="">
+										<button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button" href = "{{ path('AddPlace') }}" >
+											<i class="mdi mdi-account-plus"></i>Add new Place</button>
+									</a>
+								</div>
+							</div>
+							<div class="table-responsive  mt-1">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>Id</th>
+											<th>Name</th>
+											<th>Description</th>
+											<th>Adress</th>
+											<th>City</th>
+											<th>PostalCode</th>
+											<th>Latitude</th>
+											<th>Longitude</th>
+											<th>Notice</th>
+											<th>Status</th>
+											<th>Type</th>
+											<th>Views</th>
+											<th>actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for p in places %}
+											<tr>
+												<td>{{ p.id }}</td>
+												<td>{{ p.Name }}</td>
+												<td>{{ p.Description }}</td>
+												<td>{{ p.Adress }}</td>
+												<td>{{ p.City }}</td>
+												<td>{{ p.PostalCode }}</td>
+												<td>{{ p.Latitude }}</td>
+												<td>{{ p.Longitude }}</td>
+												<td>{{ p.Notice }}</td>
+												<td>{{ p.Status ? 'Yes' : 'No' }}</td>
+												<td>{{ p.Type }}</td>
+												<td>{{ p.Views }}</td>
+												<td>
+													<form method="post" action="{{ path('app_place_delete', {'id': p.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+														<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ p.id) }}">
+														<button class="btn btn-primary">Delete</button>
+													</form>
+												</td>
+											</tr>
+                                            {% endfor %}
+										</tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div></div></div></div></div></div>
 {% endblock %}

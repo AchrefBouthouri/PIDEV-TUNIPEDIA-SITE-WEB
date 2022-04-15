@@ -1,11 +1,22 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}New Category{% endblock %}
 
-{% block body %}
-    <h1>Create new Category</h1>
+{% block content %}
 
-    {{ include('category/_form.html.twig') }}
+                  
+                <div style="padding:20px;">
+               <h5> ADD NEW CATEGORY</h5>
+				{{ form_start(c,{'attr':{'novalidate': 'novalidate'}}) }}
+                 <div class="form-group">
+                        {{form_widget(c.Name,{'attr':{'class':'form-control '}})}}
+                        </div>
+					{#	{{form_widget(p.Attachement,{'attr':{'class':'form-control'}})}} #}
+                        <div style="margin-top:5px; ">
+                        {{form_widget(c.Ajouter,{'attr':{'class':'btn btn-primary'}})}}
 
-    <a href="{{ path('app_category_index') }}">back to list</a>
+                        {{ form_end(c) }}
+                        </div>
+			</div>
+                </div>
 {% endblock %}

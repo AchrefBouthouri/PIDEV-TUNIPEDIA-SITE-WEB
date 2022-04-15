@@ -34,25 +34,20 @@ class PlaceController extends AbstractController
     public function new(Request $request, PlaceRepository $placeRepository , AttachementRepository $AttachementRepository): Response
     {
         $place = new Place();
-        $Attachement = new Attachement();
         $form = $this->createForm(PlaceType::class, $place);
         $form->add('Ajouter',SubmitType::class); 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $placeRepository->add($place);
-           // $Attachement->setPlace($place);
-            $AttachementRepository->add($Attachement);
             $this->addFlash('success','Your request sent successfully!');
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
-
         return $this->renderForm('place/new.html.twig', [
             'place' => $place,
             'p' => $form,
         ]);
     }
-
     /**
      * @Route("/{id}", name="app_place_show", methods={"GET"})
      */

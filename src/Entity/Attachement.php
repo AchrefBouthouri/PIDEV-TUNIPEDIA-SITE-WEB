@@ -27,10 +27,7 @@ class Attachement
      */
     private $Path;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Place::class, inversedBy="Attachement")
-     */
-    private $Place;
+
 
     public function getId(): ?int
     {
@@ -57,18 +54,6 @@ class Attachement
     public function setPath(string $Path): self
     {
         $this->Path = $Path;
-
-        return $this;
-    }
-
-    public function getPlace(): ?Place
-    {
-        return $this->Place;
-    }
-
-    public function setPlace(?Place $Place): self
-    {
-        $this->Place = $Place;
 
         return $this;
     }
