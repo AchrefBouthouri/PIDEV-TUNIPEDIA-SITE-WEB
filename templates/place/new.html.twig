@@ -1,39 +1,97 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Place{% endblock %}
+{% block title %}New Place
+{% endblock %}
 
 {% block content %}
- <section class="w3ls-section contact py-5">
-	<div class="container py-sm-3">
-		<div class="w3ls-title">
-			<h2 class="heading text-center mb-sm-5 mb-4">Add new Place</h2>
-		</div>
-		<div class="w3ls_map">
-			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48306.05339877067!2d-74.245183970742!3d40.825144655510556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2555646a723a1%3A0x449f3366d017b214!2sMontclair%2C+NJ%2C+USA!5e0!3m2!1sen!2sin!4v1465991700675"></iframe>
-		</div>
+	<section class="w3ls-section contact py-5">
+		<div class="container py-sm-3">
+			<div class="w3ls-title">
+				<h2 class="heading text-center mb-sm-5 mb-4">Add new Place</h2>
+			</div>
 
-		<div class="row contact_wthreerow agileits-w3layouts">
-		
-			<div class="col-lg-7 col-md-6 mt-md-0 mt-5 w3l_contact_form">
-				<h4>Place Details</h4>
-				{{ form_start(p,{'attr':{'novalidate': 'novalidate'}}) }}
-                        {{form_widget(p.Name,{'attr':{'placeholder' :'Place Name'}})}}
-						{{ form_errors(p.Name) }}
-                        {{form_widget(p.Description,{'attr':{'placeholder' :'Description'}})}}
-                        {{form_widget(p.Adress,{'attr':{'placeholder' :'Adress'}})}}
-                        {{form_widget(p.City,{'attr':{'placeholder' :'City'}})}}
-                        {{form_widget(p.PostalCode,{'attr':{'placeholder' :'Postal Code'}})}}
-                        {{form_widget(p.Latitude,{'attr':{'placeholder' :'Latitude'}})}}
-                        {{form_widget(p.Longitude,{'attr':{'placeholder' :'Longitude'}})}}
-                        {{form_widget(p.Type,{'attr':{'class':'form-control'}})}}
-                        {{form_widget(p.Category,{'attr':{'class':'form-control'}})}}
-					{#	{{form_widget(p.Attachement,{'attr':{'class':'form-control'}})}} #}
-                        <div style="margin-top:5px; ">
-                        {{form_widget(p.Ajouter,{'attr':{'class':'btn btn-warning'}})}}
-                        {{ form_end(p) }}
-                        </div>
+			<div class="row contact_wthreerow agileits-w3layouts">
+
+				<div class="col-lg-7 col-md-6 mt-md-0 mt-5 w3l_contact_form">
+					<h4>Place Details</h4>
+					{{ form_start(p,{'attr':{'novalidate': 'novalidate'}}) }}
+					{{form_widget(p.Name,{'attr':{'placeholder' :'Place Name'}})}}
+					{{ form_errors(p.Name) }}
+					{{form_widget(p.Description,{'attr':{'placeholder' :'Description'}})}}
+					{{form_widget(p.Adress,{'attr':{'placeholder' :'Adress'}})}}
+					{{form_widget(p.City,{'attr':{'placeholder' :'City'}})}}
+					{{form_widget(p.PostalCode,{'attr':{'placeholder' :'Postal Code'}})}}
+					{{form_widget(p.Latitude,{'attr':{'placeholder' :'Latitude'}})}}
+					{{form_widget(p.Longitude,{'attr':{'placeholder' :'Longitude'}})}}
+					{{form_widget(p.Type,{'attr':{'class':'form-control'}})}}
+					{{form_widget(p.Category,{'attr':{'class':'form-control'}})}}
+					{{form_widget(p.Attachement,{'attr':{'class':'form-control'}})}}
+					<div style="margin-top:5px; ">
+						{{form_widget(p.Ajouter,{'attr':{'class':'btn btn-warning'}})}}
+						{{ form_end(p) }}
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-</section>
+		<hr>
+		<div id="maCarte" style="height:100px; width:110px;"></div>
+
+		<!-- Fichiers Javascript -->
+		<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
+		<script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+		<script>
+			let lat = document.getElementById("lat").value;
+
+let lon = document.getElementById("lon").value;
+
+var villes = {
+"Tunisair": {
+"lat": 36.8447111,
+"lon": 10.1836168
+}
+
+};
+var tableauMarqueurs = [];
+
+// On initialise la carte
+var carte = L.map('maCarte').setView([
+33.8869, 9.5375
+], 6);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+maxZoom: 18,
+attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' + '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' + 'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+id: 'mapbox.streets'
+}).addTo(carte);
+
+var marqueurs = L.markerClusterGroup();
+
+
+// On parcourt les différentes villes
+for (ville in villes) { // On crée le marqueur et on lui attribue une popup
+var marqueur = L.marker([
+villes[ville].lat,
+villes[ville].lon
+]); // .addTo(carte); Inutile lors de l'utilisation des clusters
+marqueur.bindPopup("<p>" + ville + "</p>");
+marqueurs.addLayer(marqueur);
+// On ajoute le marqueur au groupe
+
+// On ajoute le marqueur au tableau
+tableauMarqueurs.push(marqueur);
+}
+// On regroupe les marqueurs dans un groupe Leaflet
+var groupe = new L.featureGroup(tableauMarqueurs);
+
+// On adapte le zoom au groupe
+carte.fitBounds(groupe.getBounds().pad(0.5));
+
+carte.addLayer(marqueurs);
+		</script>
+
+
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+		<script src="{{ asset('vendorss/fontawesome/all.min.js')}}"></script>
+		<script src="{{ asset('assetss/js/theme.js')}}"></script>
+	</section>
 {% endblock %}

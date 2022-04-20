@@ -1,0 +1,65 @@
+{% extends 'admin.html.twig' %}
+
+{% block content %}
+
+
+	<div class="row">
+		<div class="col-lg-8 d-flex flex-column">
+			<div class="row flex-grow">
+				<div class="col-12 grid-margin stretch-card">
+					<div class="card card-rounded">
+						<div class="card-body">
+							<div>
+								<div>
+									<h4 class="card-title card-title-dash">Place List</h4>
+								</div>
+								<div>
+									<a href="{{ path('AddPlace') }}">
+										<button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button">
+											<i class="mdi mdi-account-plus"></i>Add new Place</button>
+									</a>
+								</div>
+							</div>
+							<div class="table-responsive  mt-1">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>Id</th>
+											<th>Name</th>
+											<th>Description</th>
+											<th>Adress</th>
+											<th>City</th>
+											<th>PostalCode</th>
+											<th>Latitude</th>
+											<th>Longitude</th>
+											<th>Notice</th>
+											<th>Status</th>
+											<th>Type</th>
+											<th>actions</th>
+										</tr>
+									</thead>
+
+									{% for p in places %}
+										<tbody id="tableac"></tbody>
+									{% endfor %}
+									<form class="w_search">
+										<div class="sidebar-search">
+											<div class="input-group custom-search-form">
+												<input type="text" id="searchwacim" name="searchwacim" class="form-control" placeholder="Search">
+											</div>
+											<!-- /input-group -->
+										</div>
+									</form>
+
+								</table>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div></div></div></div></div></div>
+{% endblock %}

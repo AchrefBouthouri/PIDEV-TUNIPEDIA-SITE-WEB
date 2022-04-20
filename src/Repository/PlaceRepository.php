@@ -44,7 +44,17 @@ class PlaceRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
-
+    
+     /**
+     * @return Place[]
+     */
+    public function findPlanBySujet($sujet){
+        return $this->createQueryBuilder('Place')
+            ->andWhere('Place.PostalCode LIKE :sujet')
+            ->setParameter('sujet', $sujet)
+            ->getQuery()
+            ->getResult();
+    }
     // /**
     //  * @return Place[] Returns an array of Place objects
     //  */

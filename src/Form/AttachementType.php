@@ -13,11 +13,7 @@ class AttachementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('Path',FileType::class, [
-            'mapped' => false,
-            'required' => true,
-
-        ]);
+        ->add('file',FileType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -36,8 +36,8 @@ class PlaceType extends AbstractType
             ->add('Category',EntityType::class,[
                 'class'=>Category::class,
                 'choice_label'=>'Name'
-            ]);
-        //  ->add('Attachement', FileType::class);
+            ])
+          ->add('Attachement', AttachementType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

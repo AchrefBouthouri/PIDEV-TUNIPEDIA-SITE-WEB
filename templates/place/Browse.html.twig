@@ -1,0 +1,96 @@
+{% block headw %}
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>OpenStreetMap</title>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css">
+	<link
+	rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css">
+	<!-- CSS -->
+	<style>
+		#maCarte {
+			height: 500px;
+		}
+	</style>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- ===============================================-->
+	<!--    Document Title-->
+	<!-- ===============================================--><title>TuniPedia
+	</title>
+
+	<!-- ===============================================-->
+	<!--    Favicons-->
+	<!-- ===============================================-->
+	<!-- ===============================================-->
+	<!--    Stylesheets-->
+	<!-- ===============================================--> <link href="{{ asset('assetss/css/main.css')}}"rel="stylesheet"/> <link href="{{ asset('assetss/css/noscript.css')}}" rel="stylesheet"/>
+	<link href="{{ asset('assetss/css/theme.css')}}" rel="stylesheet"/>
+	<link href="{{ asset('assetss/css/fontawesome-all.min.css')}}" rel="stylesheet"/>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Volkhov:wght@700&amp;display=swap" rel="stylesheet">
+
+{% endblock %}
+
+{% block content %}
+
+	<input type="hidden" value="48.852969" id="lat">
+	<input type="hidden" value="2.349903" id="lon">
+	<div id="maCarte" style="height:325px; width:1100px;"></div>
+
+	<!-- Fichiers Javascript -->
+	<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
+	<script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+	<script>
+		let lat = document.getElementById("lat").value;
+
+let lon = document.getElementById("lon").value;
+
+
+var tableauMarqueurs = [];
+
+// On initialise la carte
+var carte = L.map('maCarte').setView([
+33.8869, 9.5375
+], 6);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+maxZoom: 18,
+attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' + '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' + 'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+id: 'mapbox.streets'
+}).addTo(carte);
+
+var marqueurs = L.markerClusterGroup();
+
+var villes = {{ places|json_encode|raw }};
+var str = JSON.stringify(villes);
+
+console.log("Places Name :", str);
+
+
+// On parcourt les différentes villes
+for (ville in place) {
+// On crée le marqueur et on lui attribue une popup
+var marqueur = L.marker([ville.Latitude, ville.Longitude]); // .addTo(carte); Inutile lors de l'utilisation des clusters
+marqueur.bindPopup("<p>" + ville.Name + "</p>");
+marqueurs.addLayer(marqueur);
+// On ajoute le marqueur au groupe
+
+// On ajoute le marqueur au tableau
+tableauMarqueurs.push(marqueur);
+}
+// On regroupe les marqueurs dans un groupe Leaflet
+var groupe = new L.featureGroup(tableauMarqueurs);
+
+// On adapte le zoom au groupe
+carte.fitBounds(groupe.getBounds().pad(0.5));
+
+carte.addLayer(marqueurs);
+	</script>
+
+
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+	<script src="{{ asset('vendorss/fontawesome/all.min.js')}}"></script>
+	<script src="{{ asset('assetss/js/theme.js')}}"></script>
+{% endblock %}

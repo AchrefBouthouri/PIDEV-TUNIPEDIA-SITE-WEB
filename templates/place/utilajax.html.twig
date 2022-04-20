@@ -1,0 +1,26 @@
+{% for p in util %}
+	<tr>
+		<td>{{ p.id }}</td>
+		<td>{{ p.Name }}</td>
+		<td>{{ p.Description }}</td>
+		<td>{{ p.Adress }}</td>
+		<td>{{ p.City }}</td>
+		<td>{{ p.PostalCode }}</td>
+		<td>{{ p.Latitude }}</td>
+		<td>{{ p.Longitude }}</td>
+		<td>{{ p.Notice }}</td>
+		<td>{{ p.Status ? 'Yes' : 'No' }}</td>
+		<td>{{ p.Type }}</td>
+
+		<td>
+			<form method="post" action="{{ path('app_place_delete', {'id': p.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+				<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ p.id) }}">
+				<button class="btn btn-primary">Delete</button>
+			</form>
+		</td>
+	</tr>
+{% else %}
+	<tr>
+		<td colspan="15">no records found</td>
+	</tr>
+{% endfor %}

@@ -80,18 +80,11 @@
 										<b class="caret"></b>
 									</a>
 									<ul class="dropdown-menu agile_short_dropdown">
+									{% for c in categories %}
 										<li>
-											<a href="#">Historique Location</a>
+											<a href="#">{{ c.Name }}</a>
 										</li>
-										<li>
-											<a href="#">Beach</a>
-										</li>
-										<li>
-											<a href="#">Camping</a>
-										</li>
-										<li>
-											<a href="#">City</a>
-										</li>
+										{% endfor %}
 									</ul>
 								</li>
 								<li class="nav-item">

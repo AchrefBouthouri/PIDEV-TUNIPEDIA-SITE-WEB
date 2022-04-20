@@ -1,0 +1,65 @@
+<div>TuniPedia</div>
+<img style=" height: 100px; width: 100px; " align="top|left" src='data:image;base64,<?= {{img64 }};?>' />
+
+<center>
+	<h1>
+		AFFICHAGE DES PLACES
+	</h1>
+</center>
+
+<style>
+	body {
+		font: normal 12px / 20 PX "Liberation sans", Arial, Helvetica, sans-serif;
+		color: #585858;
+	}
+	img {
+		width: 300px;
+		margin: 10px;
+		border: solid 5px #E8E8E8;
+
+	}
+</style>
+
+
+<div class="card-body table-responsive p-0">
+
+
+	<table class="table table-striped" style="width:100%;" border="1">
+
+		<tr>
+			<th>Id</th>
+			<th>Name</th>
+			<th>Description</th>
+			<th>Adress</th>
+			<th>City</th>
+			<th>PostalCode</th>
+			<th>Latitude</th>
+			<th>Longitude</th>
+			<th>Notice</th>
+			<th>Status</th>
+			<th>Type</th>
+		</tr>
+		{% for p in places %}
+			<tbody>
+				<tr>
+					<td>{{ p.id }}</td>
+					<td>{{ p.Name }}</td>
+					<td>{{ p.Description }}</td>
+					<td>{{ p.Adress }}</td>
+					<td>{{ p.City }}</td>
+					<td>{{ p.PostalCode }}</td>
+					<td>{{ p.Latitude }}</td>
+					<td>{{ p.Longitude }}</td>
+					<td>{{ p.Notice }}</td>
+					<td>{{ p.Status ? 'Yes' : 'No' }}</td>
+					<td>{{ p.Type }}</td>
+				</tr>
+			</tbody>
+
+		</tr>
+	</tbody>
+{% else %}
+	<tr>
+		<td colspan="15">no records found</td>
+	</tr>
+{% endfor %}</table></div>

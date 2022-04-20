@@ -11,7 +11,9 @@
 						<div class="agile_services_grid">
 							<div class="hover06 column">
 								<div>
-									<figure><img src="{{ asset('FrontOffice/images/s2.jpg') }}" alt=" " class="img-responsive"></figure>
+								{% if i.Attachement is defined %}
+									<figure><img src="{{ asset('Attachements/')~i.Attachement.Name }}" alt=" " class="img-responsive"></figure>
+								{% endif %}
 								</div>
 							</div>
 							{% if i.Type == "Public" %}

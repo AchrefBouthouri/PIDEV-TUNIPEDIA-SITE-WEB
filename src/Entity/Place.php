@@ -12,6 +12,10 @@ use Vich\UploaderBundle\Mapping\Annotation\uploadable;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
 
+
+
+
+
 /**
  * @ORM\Entity(repositoryClass=PlaceRepository::class)
  */
@@ -65,7 +69,7 @@ class Place
     private $Longitude;
 
     /**
-     * @ORM\OneToOne(targetEntity=Category::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Category::class, cascade={"persist", "remove"})
      */
     private $Category;
 
@@ -95,8 +99,7 @@ class Place
     private $CreatedBy;
 
     /**
-     * @ORM\OneToOne(targetEntity=Attachement::class, cascade={"persist", "remove"})
-     * @Vich\UploadableField(mapping="", fileNameProperty="image")
+     * @ORM\OneToOne(targetEntity=Attachement::class, cascade={"persist","remove"})
      */
     private $Attachement;
 
@@ -272,5 +275,4 @@ class Place
         return $this->Attachement;
        // return new File($this->Attachement);
     }
-
 }
