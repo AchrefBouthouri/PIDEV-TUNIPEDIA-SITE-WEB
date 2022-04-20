@@ -29,7 +29,6 @@ class Person implements UserInterface
      * @Assert\NotBlank(message="l'email est requis")
      * @Assert\Email(message = "the email '{{ value }}' is not a valid email.")
 
-
      */
     private $Email;
 
