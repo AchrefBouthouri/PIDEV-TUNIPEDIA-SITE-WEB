@@ -5,16 +5,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <!--  css fin back -->
+</head>
+{% block content %}
+	{{ form_start(connexion) }}
+	<div class="mask d-flex align-items-center h-100 gradient-custom-3">
+		<div class="container h-100">
+			<div class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col-12 col-md-9 col-lg-7 col-xl-6">
+					<div class="card" style="border-radius: 15px;">
+						<div class="card-body p-5 ">
+							<h2 class="text-uppercase text-center mb-5">Se connecter</h2>
+							<div class="card-body p-5">
 
-    <script src="https://kit.fontawesome.com/12beb7af61.js" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+								<div>{{ form_row(connexion.Email,{"attr":{'class':'form-control form-control-lg'},"label":"Email"}) }}</div>
+								<div>{{ form_row(connexion.Password,{"attr":{'class':'form-control form-control-lg'},"label":"Password"}) }}</div>
+
+							</div>
+							<div>
+								<input type="submit" class="btn btn-primary1 text-center" value="login">
+							</div>
+							<p class="text-center text-muted mt-5 mb-0">
+							
+									Mot de passe Oublié
+
+							</p>
+                                                    <p class="text-center text-muted mt-5 mb-0">vous n'avez pas de compte ? <a href="{{ path ('signup') }}" class="fw-bold text-body"><u>Se connecter</u></a></p>
+				
+						</div>
+						<div>
+							{{ form_widget(connexion) }}
+						</div>
+						{{ form_end(connexion) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
-    <style>
+{% endblock %}
+
+<style>
         .modal {
             display: none;
             position: fixed;
@@ -44,10 +77,8 @@
             padding: 0 0 5px;
         }
         form {
-            padding: 25px;
-            margin: 25px;
             box-shadow: 0 2px 5px #f5f5f5;
-            background: #eee;
+            background-image:url('{{ asset('FrontOffice/images/LOGIN.PNG') }}')
         }
         input,
         textarea {
@@ -96,98 +127,17 @@
             border-bottom: #a99567 1px solid;
             color: #a99567;
         }
+        .btn-primary1 {
+    color: #fff;
+    background-color: #f0af4d;
+    border-color: #eeb867;
+    margin-left: 25px
+        }
+    
     </style>
 
-   
-
-
-    <!-- ===============================================-->
-    <!--    Favicons-->
-    <!-- ===============================================-->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('FrontOffice/assets/img/favicons/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('FrontOffice/assets/img/favicons/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('FrontOffice/assets/img/favicons/favicon-16x16.png') }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('FrontOffice/assets/img/favicons/favicon.ico"') }}">
-    <link rel="manifest" href="{{ asset('FrontOffice/assets/img/favicons/manifest.json') }}">
-    <meta name="msapplication-TileImage" content="{{ asset('FrontOffice/assets/img/favicons/mstile-150x150.png') }}">
-    <meta name="theme-color" content="#ffffff">
-
-
-
-    <link href="{{ asset('FrontOffice/assets/css/theme.css') }}" rel="stylesheet" />
-    <link href="{{ asset('FrontOffice/assets/css/commentaire.css') }}" rel="stylesheet" />
-    {% block links %}{% endblock %}
-    {% block headwissal %}{% endblock %}
-
-</head>
-
-{% block content %}
-	{{ form_start(connexion) }}
-
-
-
-
-
-
-
-	<div class="mask d-flex align-items-center h-100 gradient-custom-3">
-		<div class="container h-100">
-			<div class="row d-flex justify-content-center align-items-center h-100">
-				<div class="col-12 col-md-9 col-lg-7 col-xl-6">
-					<div class="card" style="border-radius: 15px;">
-						<div class="card-body p-5 ">
-							<h2 class="text-uppercase text-center mb-5">Se connecter</h2>
-							<div class="card-body p-5">
-
-								<div>{{ form_row(connexion.Email,{"attr":{'class':'form-control form-control-lg'},"label":"Email"}) }}</div>
-								<div>{{ form_row(connexion.Password,{"attr":{'class':'form-control form-control-lg'},"label":"Password"}) }}</div>
-
-							</div>
-							<div>
-								<input type="submit" class="btn btn-primary text-center" value="login">
-							</div>
-							<p class="text-center text-muted mt-5 mb-0">
-							
-									Mot de passe Oublié
-							
-							</p>
-							<p class="text-center text-muted mt-5 mb-0">vous n'avez pas de compte ?
-							
-							</p>
-						</div>
-
-
-						<div>
-							{{ form_widget(connexion) }}
-						</div>
-						{{ form_end(connexion) }}
-
-
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-{% endblock %}
 
 {% block javascripts %}
 
 
-	<script type="text/javascript">
-		var Tawk_API = Tawk_API || {},
-Tawk_LoadStart = new Date();
-(function () {
-var s1 = document.createElement("script"),
-s0 = document.getElementsByTagName("script")[0];
-s1.async = true;
-s1.src = 'https://embed.tawk.to/6229b081a34c2456412a5a68/1ftpdiush';
-s1.charset = 'UTF-8';
-s1.setAttribute('crossorigin', '*');
-s0.parentNode.insertBefore(s1, s0);
-})();
-	</script>
-	<!--End of Tawk.to Script-->
 {% endblock %}

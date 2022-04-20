@@ -20,8 +20,10 @@ class HomeController extends AbstractController
         $p=$this->getDoctrine()->getRepository(Place::class);
         $Place=$p->findAll();
 
+        
         return $this->render('home/index.html.twig', [
             'places'=>$Place
         ]);
+
     }
 }

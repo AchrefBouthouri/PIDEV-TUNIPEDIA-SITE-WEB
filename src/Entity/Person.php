@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PersonRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert ;
 
 /**
  * @ORM\Entity(repositoryClass=PersonRepository::class)
@@ -25,15 +26,22 @@ class Person implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="l'email est requis")
+     * @Assert\Email(message = "the email '{{ value }}' is not a valid email.")
+
      */
     private $Email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=8,minMessage="il faut au moin 8 caractére")
+     * @Assert\NotBlank(message="Password est requis")
+
      */
     private $Password;
 
     /**
+     * 
      * @ORM\OneToOne(targetEntity=Attachement::class, cascade={"persist", "remove"})
      */
     private $Avatar;
