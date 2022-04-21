@@ -1,4 +1,45 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+
+
+
+     
+{% block content %}
+ <section class="w3ls-section contact py-5">
+	<div class="container py-sm-3">
+		<div class="w3ls-title">
+			<h2 class="heading text-center mb-sm-5 mb-4">modify reclamation</h2>
+		</div>
+	
+		
+
+		<div class="row contact_wthreerow agileits-w3layouts">
+		
+			<div class="col-lg-7 col-md-6 mt-md-0 mt-5 w3l_contact_form">
+				<h4>Reclamation details</h4>
+				{{ form_start(form,{'attr':{'novalidate': 'novalidate'}}) }}
+
+                        
+                        {{form_widget(form.Type,{'attr':{'placeholder' :'Type'}})}}
+                        {{form_row(form.help,{'attr':{'placeholder' :'help'},'label':'Did you call help?'})}}
+                        {{form_row(form.qui,{'attr':{'placeholder' :'si oui qui?'},'label':'If yes who?'})}}
+                        {{form_row(form.seul,{'attr':{'placeholder' :'Was '},'label':'Was you alone ?'})}}
+                        {{form_row(form.contact,{'attr':{'placeholder' :'contact'},'label':'If no can you give us his number ?'})}}
+                        {{form_widget(form.text,{'attr':{'placeholder' :'text'}})}}
+                        
+                        <div style="margin-top:5px; ">
+						
+
+						<button class="btn">{{ button_label|default('Save') }}</button>
+
+       
+                        
+                       
+                        {{ form_end(form) }}
+
+						
+                        </div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}
+

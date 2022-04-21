@@ -2,10 +2,38 @@
 
 {% block title %}New Reclamation{% endblock %}
 
-{% block body %}
-    <h1>Create new Reclamation</h1>
+{% block content %}
+ <section class="w3ls-section contact py-5">
+	<div class="container py-sm-3">
+		<div class="w3ls-title">
+			<h2 class="heading text-center mb-sm-5 mb-4">Ajouter une nouvelle Reclamation</h2>
+		</div>
+		<div class="w3ls_map">
+		</div>
 
-    {{ include('reclamation/_form.html.twig') }}
+		<div class="row contact_wthreerow agileits-w3layouts">
+		
+			<div class="col-lg-7 col-md-6 mt-md-0 mt-5 w3l_contact_form">
+				
+				{{ form_start(r,{'attr':{'novalidate': 'novalidate'}}) }}
+                        
+                        {{form_row(r.Type,{'attr':{'placeholder' :'Type'},'label':'Ex: Inexsting Place etc..'})}}
+                        {{form_row(r.help,{'attr':{'placeholder' :'help'},'label':'Did you call help?'})}}
+                        {{form_row(r.qui,{'attr':{'placeholder' :'si oui qui?'},'label':'If yes who?'})}}
+                        {{form_row(r.seul,{'attr':{'placeholder' :'Was '},'label':'Were you alone ?'})}}
+                        {{form_row(r.contact,{'attr':{'placeholder' :'contact'},'label':'If no can you give us his number ?'})}}
+						<div style="margin-top:100px; ">
 
-    <a href="{{ path('app_reclamation_index') }}">back to list</a>
+                        {{form_widget(r.text,{'attr':{'placeholder' :'Description'}})}}
+                        
+                        <div style="margin-top:5px; ">
+                        {{form_widget(r.Reclamer,{'attr':{'class':'btn btn-warning'}})}}
+                        {{ form_end(r) }}
+                        </div>
+			</div>
+		</div>
+	</div>
+</section>
 {% endblock %}
+
+

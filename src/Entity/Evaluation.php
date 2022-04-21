@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\EvaluationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EvaluationRepository::class)
@@ -18,12 +19,20 @@ class Evaluation
     private $id;
 
     /**
-     * @ORM\Column(type="smallint", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
+     * @Assert\NotBlank(message="La notice est obligatoire")
+     *@Assert\Length(
+     *      min = 0,
+     *      max = 5,
+     *      minMessage = "La notice min est  {{ limit }} ",
+     *      maxMessage = "La notice ne peut pas depasser  {{ limit }} "
+     * )
      */
     private $Notice;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Le commentaire est obligatoire")
      */
     private $Comment;
 

@@ -3,12 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Reclamation;
+use App\Entity\Attachement;
 use App\Form\ReclamationType;
 use App\Repository\ReclamationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use OC\PlatformBundle\Form\AdvertType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use App\Repository\AttachementRepository;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * @Route("/reclamation")
@@ -28,10 +33,11 @@ class ReclamationController extends AbstractController
     /**
      * @Route("/new", name="app_reclamation_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, ReclamationRepository $reclamationRepository): Response
+    public function new(Request $request, ReclamationRepository $reclamationRepository ): Response
     {
         $reclamation = new Reclamation();
         $form = $this->createForm(ReclamationType::class, $reclamation);
+        $form->add('Reclamer',SubmitType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -41,7 +47,7 @@ class ReclamationController extends AbstractController
 
         return $this->renderForm('reclamation/new.html.twig', [
             'reclamation' => $reclamation,
-            'form' => $form,
+            'r' => $form,
         ]);
     }
 

@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 
 /**
  * @Route("/evaluation")
@@ -32,6 +34,7 @@ class EvaluationController extends AbstractController
     {
         $evaluation = new Evaluation();
         $form = $this->createForm(EvaluationType::class, $evaluation);
+        $form->add('Ajouter',SubmitType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -41,7 +44,7 @@ class EvaluationController extends AbstractController
 
         return $this->renderForm('evaluation/new.html.twig', [
             'evaluation' => $evaluation,
-            'form' => $form,
+            'e' => $form,
         ]);
     }
 
