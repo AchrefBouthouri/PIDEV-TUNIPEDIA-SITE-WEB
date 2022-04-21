@@ -14,9 +14,8 @@ class EvaluationType extends AbstractType
         $builder
             ->add('Notice')
             ->add('Comment')
-            ->add('CreatedAt')
-            ->add('CreatedBy')
-            ->add('Place')
+            
+            
         ;
     }
 

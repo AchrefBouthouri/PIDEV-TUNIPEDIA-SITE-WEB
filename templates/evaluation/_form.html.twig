@@ -1,4 +1,44 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+
+
+
+     
+{% block content %}
+ <section class="w3ls-section contact py-5">
+	<div class="container py-sm-3">
+		<div class="w3ls-title">
+			<h2 class="heading text-center mb-sm-5 mb-4">Evaluation details</h2>
+		</div>
+	
+		
+
+		<div class="row contact_wthreerow agileits-w3layouts">
+		
+			<div class="col-lg-7 col-md-6 mt-md-0 mt-5 w3l_contact_form">
+				
+				{{ form_start(form,{'attr':{'novalidate': 'novalidate'}}) }}
+
+                        
+                        {{form_row(form.Notice,{'attr':{'placeholder' :'Notice'}})}}
+						                        <div style="margin-top:50px; ">
+
+                        {{form_row(form.Comment,{'attr':{'placeholder' :'Notice'},'label':'You Comment'})}}
+                        
+                        
+                        <div style="margin-top:5px; ">
+						
+
+						<button class="btn">{{ button_label|default('Save') }}</button>
+
+       
+                        
+                       
+                        {{ form_end(form) }}
+
+						
+                        </div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}
+

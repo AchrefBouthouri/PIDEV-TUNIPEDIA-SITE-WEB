@@ -1,76 +1,28 @@
 <?php
 
-namespace App\Repository;
+namespace App\Form;
 
 use App\Entity\Evaluation;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
-use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * @method Evaluation|null find($id, $lockMode = null, $lockVersion = null)
- * @method Evaluation|null findOneBy(array $criteria, array $orderBy = null)
- * @method Evaluation[]    findAll()
- * @method Evaluation[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
-class EvaluationRepository extends ServiceEntityRepository
+class EvaluationType extends AbstractType
 {
-    public function __construct(ManagerRegistry $registry)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        parent::__construct($registry, Evaluation::class);
-    }
-
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function add(Evaluation $entity, bool $flush = true): void
-    {
-        $this->_em->persist($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
-    }
-
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function remove(Evaluation $entity, bool $flush = true): void
-    {
-        $this->_em->remove($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
-    }
-
-    // /**
-    //  * @return Evaluation[] Returns an array of Evaluation objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+        $builder
+            ->add('Notice')
+            ->add('Comment')
+            
+            
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Evaluation
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $resolver->setDefaults([
+            'data_class' => Evaluation::class,
+        ]);
     }
-    */
 }
