@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Offer;
+use App\Entity\Category;
 use App\Form\OfferType;
 use App\Repository\OfferRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,10 +39,15 @@ class OfferController extends AbstractController
             $offerRepository->add($offer);
             return $this->redirectToRoute('app_offer_index', [], Response::HTTP_SEE_OTHER);
         }
+        $c=$this->getDoctrine()->getRepository(Category::class);
+        $Category=$c->findAll();
 
+            
         return $this->renderForm('offer/new.html.twig', [
             'offer' => $offer,
             'form' => $form,
+            'categories'=>$Category,
+
         ]);
     }
 

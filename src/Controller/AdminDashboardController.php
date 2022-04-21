@@ -26,7 +26,7 @@ use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 class AdminDashboardController extends AbstractController
 {
     /**
-     * @Route("/admin/dashboard", name="app_admin_dashboard")
+     * @Route("/admin", name="app_admin_dashboard")
      */
     public function index(): Response
     {
@@ -52,7 +52,7 @@ class AdminDashboardController extends AbstractController
                 if ($verifuser->getRole() == "client") {
                     $session->set('user', $verifuser);
                     return $this->redirectToRoute('app_home');
-                } elseif ($verifuser->getRoles() == "admin") {
+                } elseif ($verifuser->getRole() == "admin") {
 
                     $session->set('user', $verifuser);
                     return $this->redirectToRoute('allusers');
@@ -99,9 +99,9 @@ class AdminDashboardController extends AbstractController
 
 
         /**
-     * @Route("/allusers", name="allusers")
+     * @Route("/admin/dashboard", name="allusers")
      */
-    public function AllUsers(SessionInterface $session): Response
+    public function AllUsers(SessionInterface $session,PersonRepository  $PersonRepository): Response
     
     {
         $utilisateur = $session->get('user');
@@ -111,43 +111,10 @@ class AdminDashboardController extends AbstractController
             elseif ($utilisateur->getRole() == "client") {
                 return $this->redirectToRoute('app_home');
             } elseif ($utilisateur->getRole() == "admin") {
-                return $this->redirectToRoute('allusers');
+                return $this->render('admin_dashboard/AllUsers.html.twig',[
+                    'clients' => $PersonRepository->findAll()
+                ]);
         }
-    }
-
-        /**
-     * @Route("/AddPlace", name="AddPlace")
-     */
-        public function new(Request $request, PlaceRepository $placeRepository, SessionInterface $session): Response
-        {
-            $session->clear();
-            $place = new Place();
-            $place->setStatus(1);
-            $form = $this->createForm(PlaceType::class, $place);
-            $form->add('Ajouter',SubmitType::class); 
-            $form->handleRequest($request);
-    
-            if ($form->isSubmitted() && $form->isValid()) {
-                $placeRepository->add($place);
-                $this->addFlash('success','Your request sent successfully!');
-                return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
-            }
-            return $this->renderForm('admin_dashboard/AddPlace.html.twig', [
-                'place' => $place,
-                'p' => $form,
-            ]);
-        }
-           /**
-     * @Route("/DeletePlace/{idclass}", name="deleteclass", methods={"POST"})
-     */
-    public function Delete($idclass,  PlaceRepository $placeRepository){
-        
-        $class=$placeRepository->find($idclass);
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($class);
-        $em->flush();
-       
-        return $this->redirectToRoute('AllUsers');
     }
     
     

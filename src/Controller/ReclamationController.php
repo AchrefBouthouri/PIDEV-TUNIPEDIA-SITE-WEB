@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Reclamation;
+use App\Entity\Category;
 use App\Form\ReclamationType;
 use App\Repository\ReclamationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,8 +21,11 @@ class ReclamationController extends AbstractController
      */
     public function index(ReclamationRepository $reclamationRepository): Response
     {
+        $c=$this->getDoctrine()->getRepository(Category::class);
+        $Category=$c->findAll();
         return $this->render('reclamation/index.html.twig', [
             'reclamations' => $reclamationRepository->findAll(),
+            'categories'=>$Category,
         ]);
     }
 

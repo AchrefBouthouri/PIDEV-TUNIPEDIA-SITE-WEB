@@ -40,14 +40,14 @@
                         <span class="icon-menu"></span>
                     </button>
                 </div>
-                <div>
-                    <a class="navbar-brand brand-logo" href="index.html">
+                {# <div> #}
+                    {# <a class="navbar-brand brand-logo" href="index.html">
                         <img src="{{ asset('Back/images/logo.svg') }}" alt="logo" />
                     </a>
                     <a class="navbar-brand brand-logo-mini" href="index.html">
                         <img src="{{ asset('Back/images/logo-mini.svg') }}images/logo-mini.svg" alt="logo" />
                     </a>
-                </div>
+                </div> #}
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-top">
                 <ul class="navbar-nav">
@@ -219,12 +219,11 @@
               
                     <li class="nav-item nav-category">Forms and Datas</li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
+                    <li class="nav-item" >
+                        <a class="nav-link" data-bs-toggle="collapse" href="{{ path('showPlaces') }}" aria-expanded="false" aria-controls="tables">
                             <i class="menu-icon mdi mdi-home-map-marker"></i>
                             <span class="menu-title">Place</span>
                         </a>
-                    
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
@@ -232,9 +231,45 @@
                             <span class="menu-title">Category</span>
                         </a>
                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+                            <i class="menu-icon mdi mdi-calendar-multiple-check"></i>
+                            <span class="menu-title">Event</span>
+                        </a>
+                    </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+                            <i class="menu-icon mdi mdi-calendar-plus"></i>
+                            <span class="menu-title">Offer</span>
+                        </a>
+                    </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+                            <i class="menu-icon mdi mdi-calendar-text"></i>
+                            <span class="menu-title">Reclamation</span>
+                        </a>
+                    </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+                            <i class="menu-icon mdi mdi-note-multiple"></i>
+                            <span class="menu-title">Programme</span>
+                        </a>
+                    </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+                            <i class="menu-icon mdi mdi-comment-processing"></i>
+                            <span class="menu-title">Commentaire</span>
+                        </a>
+                    </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+                            <i class="menu-icon mdi mdi-calendar-clock"></i>
+                            <span class="menu-title">Reservation</span>
+                        </a>
+                    </li>
                     <li class="nav-item nav-category">pages</li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+                        <a class="nav-link" data-bs-toggle="collapse" href="{{ path('allusers') }}" aria-expanded="false" aria-controls="auth">
                             <i class="menu-icon mdi mdi-account-circle-outline"></i>
                             <span class="menu-title">Users</span>
                             
@@ -298,7 +333,29 @@
     <script src="{{ asset('Back/js/Chart.roundedBarCharts.js') }}"></script>
     <!-- End custom js for this page-->
     </body>
+<script>$(document).ready(function () {
+var currentRequest = null;
+$("#searchwacim").keyup(function (e) {
+var value = $(this).val();
+if (currentRequest != null) {
+currentRequest.abort();
+}
+currentRequest = $.ajax({
 
+url: "{{ path('plsearch') }}",
+type: 'GET',
+data: {
+'searchValue': value
+},
+
+success: function (retour) {
+$('#tableac').html(retour);
+
+}
+});
+return false;
+});
+});</script>
     </html>
 
     {% endblock %}
