@@ -3,11 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Reclamation;
-<<<<<<< HEAD
-use App\Entity\Category;
-=======
 use App\Entity\Attachement;
->>>>>>> 3dfa7b53db36e4e25868f4f5cbf8028097c3a1a4
 use App\Form\ReclamationType;
 use App\Repository\ReclamationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -17,6 +17,11 @@ use App\Entity\Person;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Form\ConnexionType;
 use App\Repository\PersonRepository;
+use App\Repository\ReservationRepository;
+use App\Repository\EvaluationRepository;
+use App\Repository\OfferRepository;
+use App\Repository\ReclamationRepository;
+use App\Repository\EventRepository;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -99,7 +104,7 @@ class AdminDashboardController extends AbstractController
 
 
         /**
-     * @Route("/admin/dashboard", name="allusers")
+     * @Route("/admin/dashboard/users", name="allusers")
      */
     public function AllUsers(SessionInterface $session,PersonRepository  $PersonRepository): Response
     
@@ -111,11 +116,129 @@ class AdminDashboardController extends AbstractController
             elseif ($utilisateur->getRole() == "client") {
                 return $this->redirectToRoute('app_home');
             } elseif ($utilisateur->getRole() == "admin") {
-                return $this->render('admin_dashboard/AllUsers.html.twig',[
-                    'clients' => $PersonRepository->findAll()
+                return $this->render('admin_dashboard/AllUsersSearch.html.twig',[
+                    'clients' => $PersonRepository->findAll(),
                 ]);
         }
     }
+
+            /**
+     * @Route("/admin/dashboard/reservations", name="allreservations")
+     */
+    public function AllReservations(SessionInterface $session,ReservationRepository  $ReservationRepository): Response
+    
+    {
+        $utilisateur = $session->get('user');
+        if (is_null($utilisateur)) {
+            return $this->redirectToRoute('login');
+        }
+            elseif ($utilisateur->getRole() == "client") {
+                return $this->redirectToRoute('app_home');
+            } elseif ($utilisateur->getRole() == "admin") {
+                return $this->render('admin_dashboard/AllReservations.html.twig',[
+                    'Reservations' => $ReservationRepository->findAll(),
+                ]);
+        }
+    }
+    
+            /**
+     * @Route("/admin/dashboard/reclamations", name="allreclamations")
+     */
+    public function AllReclamations(SessionInterface $session,ReclamationRepository  $ReclamationRepository): Response
+    
+    {
+        $utilisateur = $session->get('user');
+        if (is_null($utilisateur)) {
+            return $this->redirectToRoute('login');
+        }
+            elseif ($utilisateur->getRole() == "client") {
+                return $this->redirectToRoute('app_home');
+            } elseif ($utilisateur->getRole() == "admin") {
+                return $this->render('admin_dashboard/AllReclamations.html.twig',[
+                    'Reclamations' => $ReclamationRepository->findAll(),
+                ]);
+        }
+    }
+                /**
+     * @Route("/admin/dashboard/offers", name="alloffers")
+     */
+    public function AllOffers(SessionInterface $session,OfferRepository  $OfferRepository): Response
+    
+    {
+        $utilisateur = $session->get('user');
+        if (is_null($utilisateur)) {
+            return $this->redirectToRoute('login');
+        }
+            elseif ($utilisateur->getRole() == "client") {
+                return $this->redirectToRoute('app_home');
+            } elseif ($utilisateur->getRole() == "admin") {
+                return $this->render('admin_dashboard/AllOffer.html.twig',[
+                    'Offers' => $OfferRepository->findAll(),
+                ]);
+        }
+    }
+
+                    /**
+     * @Route("/admin/dashboard/events", name="allevents")
+     */
+    public function Allevents(SessionInterface $session,EventRepository  $EventRepository): Response
+    
+    {
+        $utilisateur = $session->get('user');
+        if (is_null($utilisateur)) {
+            return $this->redirectToRoute('login');
+        }
+            elseif ($utilisateur->getRole() == "client") {
+                return $this->redirectToRoute('app_home');
+            } elseif ($utilisateur->getRole() == "admin") {
+                return $this->render('admin_dashboard/AllEvents.html.twig',[
+                    'Events' => $EventRepository->findAll(),
+                ]);
+        }
+    }
+                       /**
+     * @Route("/admin/dashboard/evaluations", name="allevaluations")
+     */
+    public function Allevaluations(SessionInterface $session,EvaluationRepository  $EvaluationRepository): Response
+    
+    {
+        $utilisateur = $session->get('user');
+        if (is_null($utilisateur)) {
+            return $this->redirectToRoute('login');
+        }
+            elseif ($utilisateur->getRole() == "client") {
+                return $this->redirectToRoute('app_home');
+            } elseif ($utilisateur->getRole() == "admin") {
+                return $this->render('admin_dashboard/AllEvaluations.html.twig',[
+                    'Evaluations' => $EvaluationRepository->findAll(),
+                ]);
+        }
+    }
+
+            /**
+     * @Route("/logout", name="logout")
+     */
+    public function logout(SessionInterface $session): Response
+    
+    {
+       $session->clear();
+
+            return $this->redirectToRoute('login');
+    }
+
+    /**
+     * @Route("/Person/Search", name="Search")
+     */
+    public function Search(PersonRepository  $PersonRepository,Request $request): Response
+    
+    {
+                $requestString=$request->get('searchValue');
+                return $this->render('admin_dashboard/Search.html.twig',[
+                    'clients' => $PersonRepository->findUser($requestString),
+                ]);
+        }
+    
+
     
     
 }

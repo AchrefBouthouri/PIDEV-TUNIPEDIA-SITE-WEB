@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/axentix@0.5.3/dist/css/axentix.min.css"> {% block stylesheets %}{% endblock %}
+		<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+	</head>
+	<body class="layout with-sidenav">
+		<header>
+			<nav class="navbar primary" style="background-color: #ffaf00;">
+				<a href="{{ path('app_home') }}" class="navbar-brand">Home</a>
+				<div class="navbar-menu ml-auto">
+					<a class="navbar-link" href="{{path('logout')}}">Deconnexion</a>
+				</div>
+			</nav>
+		</header>
+		<div id="example-sidenav" class="sidenav large fixed white">
+			<div class="sidenav-header">
+				<button data-target="example-sidenav" class="sidenav-trigger">
+					<i class="fas fa-times"></i>
+				</button>
+				<img class="logo dropshadow-1" src="your_img_path" alt="Logo"/>
+			</div>
+			<a href="#" class="sidenav-link active">Mon Profil</a>
+			<a href="#" class="sidenav-link">Mes Endroits</a>
+			<a href="#" class="sidenav-link">Mes Evenements</a>
+			<a href="#" class="sidenav-link">Mes Offers</a>
+			<a href="#" class="sidenav-link">Mes Programmes</a>
+		</div>
+		<main>
+			<button data-target="example-sidenav" class="btn press amaranth dark-1 sidenav-trigger hide-md-up">
+			</button>
+			{% block body %}{% endblock %}
+		</main>
+
+		<footer class="footer primary" style="background-color: #ffaf00;">
+			Copyright © 2021 - TuniPedia 
+		</footer>
+
+
+		<script src="https://cdn.jsdelivr.net/npm/axentix@0.5.3/dist/js/axentix.min.js"></script>
+		{% block javascripts %}{% endblock %}
+		<script>
+			var sidenav = new Sidenav('#example-sidenav');
+		</script>
+	
+	</body>
+</html>
