@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Place{% endblock %}
+
+{% block content %}
+ <section class="w3ls-section contact py-5">
+	<div class="container py-sm-3">
+		<div class="w3ls-title">
+			<h2 class="heading text-center mb-sm-5 mb-4">add new program</h2>
+		</div>
+	
+		
+
+		<div class="row contact_wthreerow agileits-w3layouts">
+		
+			<div class="col-lg-7 col-md-6 mt-md-0 mt-5 w3l_contact_form">
+				<h4>program details</h4>
+				{{ form_start(p,{'attr':{'novalidate': 'novalidate'}}) }}
+
+				        
+				    
+						
+
+
+
+                        <fieldset>
+                        {{ form_row(p.name, {'attr':{'placeholder': 'name'}}) }}
+						<div style="move-top:200px; ">
+                    </fieldset>
+						<div style="margin-top:20px; ">
+                        <fieldset>
+                        {{ form_row(p.date, {'attr':{'placeholder': 'date'}}) }}
+						<div style="move-top:200px; ">
+                    </fieldset>
+						<div style="margin-top:20px; ">
+                        
+						<div style="margin-top:20px; ">
+
+
+                        <div class="col-md-100">
+                    <fieldset>
+                        {{ form_row(p.prix, {'attr':{'placeholder': 'prix(DT)'}}) }}
+						<div style="move-top:200px; ">
+                    </fieldset>
+                </div>
+
+				<div style="margin-top:20px; ">
+
+						<div class="col-md-100">
+                    <fieldset>
+					    
+					    <div style = "position:relative; left:600px; top:-260px; ">						
+                        {{ form_row(p.description, {'attr':{'placeholder': 'Description'}})  }}
+						
+						
+                    </fieldset> 
+                </div>
+					    
+						<div style="margin-top:20px; ">
+						
+
+						
+
+       
+                        
+                        {{form_widget(p.Ajouter,{'attr':{'class':'btn btn-warning'}})}} <div style="margin-top:100px; ">
+                        {{ form_end(p) }}
+
+						
+                        </div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}

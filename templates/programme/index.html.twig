@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Programme index{% endblock %}
+
+{% block content %}
+    <section class="featured_services py-5">
+		<h3 class="heading text-center mb-5">programs list</h3>
+		<div class="container py-3">
+			<div class="row agile_inner_info">
+				{% for i in programmes %}
+                 
+					<div class=" col-sm-6  card box-shadow">
+								<div class="card-header">
+									<h4>{{i.name}}
+										
+									</h4>
+								</div>
+								<div class="card-body">
+									<h5 class="card-title pricing-card-title">
+										<span class="align-top">DT</span>{{i.prix}}
+										<small class="text-muted">/ Person</small>
+									</h5>
+									<ul class="list-unstyled mt-3 mb-4">
+                                        
+										<li class="py-2">{{i.description}}</li>
+										
+									</ul>
+									<a href="{{ path('app_programme_show', {'id': i.id}) }}">show</a>
+								</div>
+							</div>
+
+                
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+    <a href="{{ path('app_programme_new') }}">Create new</a>
+{% endblock %}
