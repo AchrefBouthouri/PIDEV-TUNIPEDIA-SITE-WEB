@@ -1,4 +1,7 @@
 {
+    "cmen/google-charts-bundle": {
+        "version": "5.0.0"
+    },
     "doctrine/annotations": {
         "version": "1.13",
         "recipe": {
@@ -80,6 +83,9 @@
     "dompdf/dompdf": {
         "version": "v1.2.1"
     },
+    "drmonty/leaflet-routing-machine": {
+        "version": "3.2.8"
+    },
     "egulias/email-validator": {
         "version": "3.1.2"
     },
@@ -88,6 +94,12 @@
     },
     "jms/metadata": {
         "version": "2.6.1"
+    },
+    "knplabs/knp-components": {
+        "version": "v3.5.0"
+    },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v5.8.0"
     },
     "laminas/laminas-code": {
         "version": "4.5.1"

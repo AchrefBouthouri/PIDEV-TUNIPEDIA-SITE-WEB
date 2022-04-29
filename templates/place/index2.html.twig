@@ -38,9 +38,24 @@
 											<th>actions</th>
 										</tr>
 									</thead>
-
 									{% for p in places %}
-										<tbody id="tableac"></tbody>
+										{% if p.Status == 1 %}
+											<tr>
+												<tbody id="tableac">
+													<td>{{ p.id }}</td>
+													<td>{{ p.Name }}</td>
+													<td>{{ p.Description }}</td>
+													<td>{{ p.Adress }}</td>
+													<td>{{ p.City }}</td>
+													<td>{{ p.PostalCode }}</td>
+													<td>{{ p.Latitude }}</td>
+													<td>{{ p.Longitude }}</td>
+													<td>{{ p.Notice }}</td>
+													<td>{{ p.Status}}</td>
+													<td>{{ p.Type }}</td>
+												</tbody>
+											</tr>
+										{% endif %}
 									{% endfor %}
 									<form class="w_search">
 										<div class="sidebar-search">
@@ -61,5 +76,4 @@
 			</div>
 		</div>
 	</div>
-</div></div></div></div></div></div>
-{% endblock %}
+</div></div></div></div></div></div>{% endblock %}

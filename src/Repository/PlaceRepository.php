@@ -50,11 +50,45 @@ class PlaceRepository extends ServiceEntityRepository
      */
     public function findPlanBySujet($sujet){
         return $this->createQueryBuilder('Place')
-            ->andWhere('Place.PostalCode LIKE :sujet')
-            ->setParameter('sujet', $sujet)
+            ->andWhere('Place.PostalCode LIKE :sujet or Place.Name LIKE :sujet')
+            ->setParameter('sujet', '%'.$sujet.'%')
             ->getQuery()
             ->getResult();
     }
+    
+    public function updatePlaceStatus($id)
+    {
+        return $this->createQueryBuilder('p')
+            ->update()
+            ->set('p.Status', 1)
+            ->where('p.id = ?1')
+            ->setParameter(1, $id)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+    public function findPlaceByType($type){
+
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery(
+            'SELECT DISTINCT  count(p.Type) FROM   App\Entity\Place p  where p.Type = :typee   '
+        );
+        $query->setParameter('typee', $type);
+        return $query->getResult();
+    }
+    public function findPlaceByStatus($type){
+
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery(
+            'SELECT DISTINCT  count(p.Status) FROM   App\Entity\Place p  where p.Status = :typee   '
+        );
+        $query->setParameter('typee', $type);
+        return $query->getResult();
+    }
+   
+         
     // /**
     //  * @return Place[] Returns an array of Place objects
     //  */

@@ -8,11 +8,12 @@
 				{% for i in places %}
                  {% if i.Status == 1 %}
 					<div class="col-lg-4 col-md-6 mt-md-0 mt-5 w3_agile_services_grid">
+					
 						<div class="agile_services_grid">
 							<div class="hover06 column">
 								<div>
 								{% if i.Attachement is defined %}
-									<figure><img src="{{ asset('Attachements/')~i.Attachement.Name }}" alt=" " class="img-responsive"></figure>
+									<figure><img src="{{ asset('Attachements/')~i.Attachement.Name }}" alt=" " class="img-responsive" height=250 width=250></figure>
 								{% endif %}
 								</div>
 							</div>
@@ -29,11 +30,13 @@
 						</div>
 						<h4>{{ i.Name }}</h4>
 						<p>{{ i.Description }}</p>
+						<a href="{{ path('app_place_show', {'id': i.id}) }}">See More</a>
 					</div>
-
                 {% endif %}
+				
 				{% endfor %}
 			</div>
+
 		</div>
 	</section>
 

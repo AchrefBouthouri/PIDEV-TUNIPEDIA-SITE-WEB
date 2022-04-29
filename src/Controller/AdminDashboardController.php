@@ -115,40 +115,6 @@ class AdminDashboardController extends AbstractController
         }
     }
 
-        /**
-     * @Route("/AddPlace", name="AddPlace")
-     */
-        public function new(Request $request, PlaceRepository $placeRepository, SessionInterface $session): Response
-        {
-            $session->clear();
-            $place = new Place();
-            $place->setStatus(1);
-            $form = $this->createForm(PlaceType::class, $place);
-            $form->add('Ajouter',SubmitType::class); 
-            $form->handleRequest($request);
-    
-            if ($form->isSubmitted() && $form->isValid()) {
-                $placeRepository->add($place);
-                $this->addFlash('success','Your request sent successfully!');
-                return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
-            }
-            return $this->renderForm('admin_dashboard/AddPlace.html.twig', [
-                'place' => $place,
-                'p' => $form,
-            ]);
-        }
-           /**
-     * @Route("/DeletePlace/{idclass}", name="deleteclass", methods={"POST"})
-     */
-    public function Delete($idclass,  PlaceRepository $placeRepository){
-        
-        $class=$placeRepository->find($idclass);
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($class);
-        $em->flush();
-       
-        return $this->redirectToRoute('AllUsers');
-    }
     
     
 }

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CategoryRepository;
 use Symfony\Component\Validator\Constraints as Assert ;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,6 +23,7 @@ class Category
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min=5,max=30,minMessage="il faut au moin 5 carac",maxMessage="il faut au max 30 carac")
      * @Assert\NotBlank
+     * @Groups("Category")
      */
     private $Name;
 

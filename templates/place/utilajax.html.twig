@@ -1,4 +1,4 @@
-{% for p in util %}
+{% for p in places %}
 	<tr>
 		<td>{{ p.id }}</td>
 		<td>{{ p.Name }}</td>
@@ -19,6 +19,8 @@
 			</form>
 		</td>
 	</tr>
+
+
 {% else %}
 	<tr>
 		<td colspan="15">no records found</td>

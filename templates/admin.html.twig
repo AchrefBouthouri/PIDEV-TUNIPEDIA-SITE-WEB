@@ -7,7 +7,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{% block title %} TuniPedia {% endblock%}</title>
+    <title>{% block title %} TuniPedia {% endblock %}</title>
     <!-- plugins:css -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('Front/img/travel.ico')}}">
     <!-- Favicon -->
@@ -283,6 +283,32 @@
     <script src="{{ asset('Back/vendors/chart.js/Chart.min.js') }}"></script>
     <script src="{{ asset('Back/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('Back/vendors/progressbar.js/progressbar.min.js') }}"></script>
+ <script>
+        $( document ).ready(function() {
+            var currentRequest = null;
+            $("#searchwacim").keyup(function(e){
+                var value = $(this).val();
+                if(currentRequest != null) {
+                    currentRequest.abort();
+                }
+                currentRequest = $.ajax({
+
+                    url : "{{ path('plsearch') }}",
+                    type : 'GET',
+                    data: {
+                        'searchValue' : value
+                    },
+
+                    success : function(retour)
+                    {
+                        $('#tableac').html(retour);
+
+                    },
+                });
+                return false;
+            });
+        });
+    </script>
 
     <!-- End plugin js for this page -->
     <!-- inject:js -->
@@ -296,6 +322,7 @@
     <script src="{{ asset('Back/js/jquery.cookie.js') }}" type="text/javascript"></script>
     <script src="{{ asset('Back/js/dashboard.js') }}"></script>
     <script src="{{ asset('Back/js/Chart.roundedBarCharts.js') }}"></script>
+     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <!-- End custom js for this page-->
     </body>
 

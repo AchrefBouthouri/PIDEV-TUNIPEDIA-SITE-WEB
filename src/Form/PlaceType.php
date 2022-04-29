@@ -33,6 +33,7 @@ class PlaceType extends AbstractType
                 ],
                 'multiple'=>false,
                 'expanded'=>false])
+            
             ->add('Category',EntityType::class,[
                 'class'=>Category::class,
                 'choice_label'=>'Name'
