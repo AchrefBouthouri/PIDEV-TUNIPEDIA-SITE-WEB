@@ -1,0 +1,53 @@
+<div>TuniPedia</div>
+
+
+<center>
+	<h1>
+		AFFICHAGE DES Reservations
+	</h1>
+</center>
+
+<style>
+	body {
+		font: normal 12px / 20 PX "Liberation sans", Arial, Helvetica, sans-serif;
+		color: #585858;
+	}
+	img {
+		width: 300px;
+		margin: 10px;
+		border: solid 5px #E8E8E8;
+	}
+</style>
+
+
+<div class="card-body table-responsive p-0">
+
+
+	<table class="table table-striped" style="width:100%;" border="1">
+
+		<tr>
+			<th>Id</th>
+			<th>Nom</th>
+			<th>Prenom</th>
+			<th>Date</th>
+			<th>Nbrplace</th>
+		
+		</tr>
+		{% for p in reservations %}
+			<tbody>
+				<tr>
+					<td>{{ p.id }}</td>
+					<td>{{ p.Nom }}</td>
+					<td>{{ p.Prenom }}</td>
+					<td>{{ p.Date|date('Y-m-d')  }}</td>
+					<td>{{ p.Nbrplace }}</td>
+					
+			</tbody>
+
+		</tr>
+	</tbody>
+{% else %}
+	<tr>
+		<td colspan="15">no records found</td>
+	</tr>
+{% endfor %}</table></div>

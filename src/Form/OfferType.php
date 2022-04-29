@@ -6,6 +6,8 @@ use App\Entity\Offer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Entity\Event;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class OfferType extends AbstractType
 {
@@ -15,7 +17,11 @@ class OfferType extends AbstractType
             ->add('Date_Debut')
             ->add('Date_Fin')
             ->add('Montant')
-            ->add('Event')
+            ->add('Event',EntityType::class,[
+                'class'=>Event::class,
+                'choice_label'=>'ID'
+                
+          ])
         ;
     }
 

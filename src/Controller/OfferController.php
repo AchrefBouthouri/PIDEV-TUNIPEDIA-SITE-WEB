@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 
 /**
  * @Route("/offer")
@@ -32,6 +34,7 @@ class OfferController extends AbstractController
     {
         $offer = new Offer();
         $form = $this->createForm(OfferType::class, $offer);
+        $form->add('Ajouter',SubmitType::class); 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -41,7 +44,7 @@ class OfferController extends AbstractController
 
         return $this->renderForm('offer/new.html.twig', [
             'offer' => $offer,
-            'form' => $form,
+            'p' => $form,
         ]);
     }
 

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation index{% endblock %}
+
+{% block content %}
+    <h1>Reservation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Prenom</th>
+                <th>Date</th>
+                <th>NbrPlace</th>
+                <th>Validation</th>
+                <th>actions</th>
+                
+
+            </tr>
+        </thead>
+       	{% for p in reservations %}
+										<tbody id="tableac"></tbody>
+									{% endfor %}
+    </table>
+    	<form class="w_search">
+										<div class="sidebar-search">
+											<div class="input-group custom-search-form">
+												<input type="text" id="search" name="search" class="form-control" placeholder="Search">
+											</div>
+											<!-- /input-group -->
+										</div>
+									</form>
+
+ <a href="{{ path('trier') }}">Trier</a>
+
+    <a href="{{ path('app_reservation_new') }}">Create new</a>
+    <a href="{{path('PDFWacim') }}" >Imprimer</a>
+{% endblock %}

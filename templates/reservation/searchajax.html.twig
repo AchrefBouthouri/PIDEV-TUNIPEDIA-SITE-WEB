@@ -1,0 +1,15 @@
+{% for p in reservations %}
+	<tr>
+	<td>{{ p.id }}</td>
+	<td>{{ p.Nom }}</td>
+	<td>{{ p.Prenom }}</td>
+	<td>{{ p.Date|date('Y-m-d')  }}</td>
+	<td>{{ p.Nbrplace }}</td>
+
+	
+	</tr>
+{% else %}
+	<tr>
+		<td colspan="15">no records found</td>
+	</tr>
+{% endfor %}

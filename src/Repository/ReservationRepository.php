@@ -61,7 +61,16 @@ class ReservationRepository extends ServiceEntityRepository
         ;
     }
     */
-
+/**
+     * @return Reservation[]
+     */
+    public function findPlanBySujet($sujet){
+        return $this->createQueryBuilder('R')
+            ->andWhere('R.Prenom LIKE :sujet')
+            ->setParameter('sujet', '%'.$sujet.'%')
+            ->getQuery()
+            ->getResult();
+    }
     /*
     public function findOneBySomeField($value): ?Reservation
     {

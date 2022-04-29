@@ -2,14 +2,17 @@
 
 {% block title %}Reservation index{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Reservation index</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Prenom</th>
                 <th>Date</th>
+                <th>NbrPlace</th>
                 <th>Validation</th>
                 <th>actions</th>
             </tr>
@@ -17,8 +20,13 @@
         <tbody>
         {% for reservation in reservations %}
             <tr>
-                <td>{{ reservation.id }}</td>
+            <td>{{ reservation.id }}</td>
+                <td>{{ reservation.Nom }}</td>
+                <td>{{ reservation.Prenom}}</td>
+               
+                
                 <td>{{ reservation.Date ? reservation.Date|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation.Nbrplace }}</td>
                 <td>{{ reservation.Validation ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('app_reservation_show', {'id': reservation.id}) }}">show</a>
@@ -32,6 +40,18 @@
         {% endfor %}
         </tbody>
     </table>
+    	<form class="w_search">
+										<div class="sidebar-search">
+											<div class="input-group custom-search-form">
+												<input type="text" id="searchwacim" name="searchwacim" class="form-control" placeholder="Search">
+											</div>
+											<!-- /input-group -->
+										</div>
+									</form>
+
+ <a href="{{ path('trier') }}">Trier</a>
 
     <a href="{{ path('app_reservation_new') }}">Create new</a>
+    <a href="{{path('PDFWacim') }}" >Imprimer</a>
 {% endblock %}
+ 

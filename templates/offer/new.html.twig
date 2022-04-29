@@ -2,10 +2,31 @@
 
 {% block title %}New Offer{% endblock %}
 
-{% block body %}
-    <h1>Create new Offer</h1>
+{% block content %}
+ <section class="w3ls-section contact py-5">
+	<div class="container py-sm-3">
+		<div class="w3ls-title">
+			<h2 class="heading text-center mb-sm-5 mb-4">Add new Offer</h2>
+		</div>
+		
 
-    {{ include('offer/_form.html.twig') }}
-
-    <a href="{{ path('app_offer_index') }}">back to list</a>
+		<div class="row contact_wthreerow agileits-w3layouts">
+		
+			<div class="col-lg-7 col-md-6 mt-md-0 mt-5 w3l_contact_form">
+				<h4>offer Details</h4>
+				{{ form_start(p,{'attr':{'novalidate': 'novalidate'}}) }}
+                        
+                        {{form_widget(p.Event,{'attr':{'placeholder' :'Event'}})}}
+                        {{form_widget(p.Date_Debut	,{'attr':{'placeholder' :'form-control'}})}}
+                        {{form_widget(p.Date_Fin	,{'attr':{'placeholder' :'form-control'}})}}
+                        {{form_widget(p.Montant,{'attr':{'placeholder' :'montant'}})}}
+                       
+                        <div style="margin-top:5px; ">
+                        {{form_widget(p.Ajouter,{'attr':{'class':'btn btn-warning'}})}}
+                        {{ form_end(p) }}
+                        </div>
+			</div>
+		</div>
+	</div>
+</section>
 {% endblock %}

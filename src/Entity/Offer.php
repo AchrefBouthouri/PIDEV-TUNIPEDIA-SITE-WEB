@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Repository\OfferRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=OfferRepository::class)
  */
@@ -19,16 +19,20 @@ class Offer
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="le date debut est requis")
      */
     private $Date_Debut;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="le date fin est requis")
      */
     private $Date_Fin;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(message="le montantest requis")
+     *  @Assert\Regex(pattern="/^[0-9]*$/" ,match=true ,message="seuls les chiffre sont autorisés")
      */
     private $Montant;
 
@@ -81,7 +85,9 @@ class Offer
     public function getEvent(): ?Event
     {
         return $this->Event;
+
     }
+    
 
     public function setEvent(?Event $Event): self
     {

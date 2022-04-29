@@ -2,11 +2,23 @@
 
 {% block title %}Reservation{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Reservation</h1>
 
     <table class="table">
         <tbody>
+         <tr>
+                <th>Nom</th>
+                <td>{{ reservation.Nom  }}</td>
+            </tr>
+             <tr>
+                <th>Prenom</th>
+                <td>{{ reservation.Prenom}}</td>
+            </tr>
+             <tr>
+                <th>Nombre de place</th>
+                <td>{{ reservation.Nbrplace}}</td>
+            </tr>
             <tr>
                 <th>Id</th>
                 <td>{{ reservation.id }}</td>
@@ -19,6 +31,7 @@
                 <th>Validation</th>
                 <td>{{ reservation.Validation ? 'Yes' : 'No' }}</td>
             </tr>
+            
         </tbody>
     </table>
 
