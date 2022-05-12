@@ -41,8 +41,17 @@
                                                             <div class="card-body">
                                                                 <div class="d-sm-flex justify-content-between align-items-start">
                                                                     <div>
-                                                                        <h4 class="card-title card-title-dash">La liste des Clients</h4>
+                                                                        <h4 class="card-title card-title-dash" style="margin-right: 600px;">La liste des Utilisateurs</h4>
                                                                         <p class="card-subtitle card-subtitle-dash"></p>
+                                                                    </div>
+                                                                    <div>
+                                                                    <ul class="navbar-nav ms-auto">
+                                                                       <li class="nav-item">
+                                                                            <form class="search-form" action="">
+                                                                            <input type="search" class="form-control" placeholder="Search Here" title="Search here">
+                                                                            </form>
+                                                                        </li>
+                                                                        </ul>
                                                                     </div>
                                                                     <div>
                                                                         <script type="text/javascript">
@@ -57,15 +66,47 @@
                                                                         <thead>
                                                                         <tr>
                                                                             
-                                                                            <th>CIN</th>
-                                                                            <th>Image</th>
-                                                                            <th>UserName</th>
-                                                                            <th>Numero</th>
+                                                                            <th>FullName</th>
                                                                             <th>Email</th>
-                                                                            <th>Adresse</th>
-                                                                            <th>actions</th>
+                                                                            <th>Role</th>
+                                                                            <th>Gender</th>
+                                                                            <th>Nationalite</th>
+                                                                            <th>Balance</th>
+                                                                            <th>IsPartner</th>
+                                                                            <th>HasPlaces</th>
+                                                                            <th>Actions</th>
                                                                         </tr>
                                                                         </thead>
+                                                                        <tbody>
+                                                                         {% for client in clients %}
+                                                                            <tr>
+                                                                               
+                                                                                <td>{{ client.FullName }}</td>
+                                                                                {# {% if client.image|length > 0 %}
+                                                                                    <td><img src="{{ asset('uploads/'~ client.image ) }}" width="250" height="150"></td>
+                                                                                {% else %}
+                                                                                    <td><img src="{{ asset('uploads/'~ "Not found.jpg" ) }}" width="250" height="150"></td>
+                                                                                {% endif %} #}
+                                                                                <td>{{ client.Email }}</td> 
+                                                                                <td>{{ client.Role }}</td>
+                                                                                <td>{{ client.Gender }}</td>
+                                                                                <td>{{ client.Nationalite }}</td>
+                                                                                <td>{{ client.Balance ? '0.0 DT' :'0.0 DT'}}</td>
+                                                                                <td>{{ client.IsPartner ? 'Yes' : 'No' }}</td>
+                                                                                <td>{{ client.HasPlaces ? 'Yes' : 'No' }}</td>
+                                                                                {# <td>{{ client.CreatedAt }}</td> #}
+                                                                                <td>
+                                                                                     <a href="{{ path('app_person_crud_delete', {'id': client.Id}) }}"><button class="btn btn-primary btn-lg text-white mb-0 me-0"><i class="icon-trash"></i>Delete</button></a>
+                                                                                     {# {{ include('person_crud/_delete_form.html.twig') }} #}
+                                                                                </td>
+                                                                            </tr>
+                                                                            {% endfor %}
+                                                                        {# {% else %}
+                                                                            <tr>
+                                                                                <td colspan="9">no records found</td>
+                                                                            </tr>
+                                                                        {% endfor %} #}
+                                                                        </tbody>
                                                                      
                                                                     </table>
                                                             </div>
@@ -82,33 +123,7 @@
                                                 <div class="row flex-grow">
                                                     <div class="col-12 grid-margin stretch-card">
                                                         <div class="card card-rounded">
-                                                            <div class="card-body">
-                                                                <div class="d-sm-flex justify-content-between align-items-start">
-                                                                    <div>
-                                                                        <h4 class="card-title card-title-dash">la liste des Restaurants</h4>
-                                                                        <p class="card-subtitle card-subtitle-dash">You have 50+ new requests</p>
-                                                                    </div>
-                                                                    <div>
-                                                                        <a href=""> <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-account-plus"></i>Add new Restaurants</button> </a>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="table-responsive  mt-1">
-                                                                    <table class="table">
-                                                                        <thead>
-                                                                        <tr>
-                                                                            <th>Id</th>
-                                                                            <th>Image</th>
-                                                                            <th>Nom_Restaurant</th>
-                                                                            <th>Adresse_Restaurant</th>
-                                                                            <th>Num_Tel_Restaurant</th>
-                                                                            <th>Description_Restaurant</th>
-                                                                            <th>actions</th>
-                                                                        </tr>
-                                                                        </thead>
-                                                                        
-                                                                    </table>
-                                                                </div>
-                                                            </div>
+                                                          
                                                         </div>
                                                     </div>
                                                 </div>
@@ -127,6 +142,13 @@
                 </div>
                 <!-- main-panel ends -->
              </div>
+             <style>
+             .stretch-card > .card {
+                width: 100%;
+                min-width: 151%;
+            }
+
+             </style>
              </body>
 
 			{% endblock %}

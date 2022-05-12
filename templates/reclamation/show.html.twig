@@ -2,7 +2,7 @@
 
 {% block title %}Reclamation{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Reclamation</h1>
 
     <table class="table">
@@ -15,6 +15,27 @@
                 <th>Text</th>
                 <td>{{ reclamation.Text }}</td>
             </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ reclamation.Type }}</td>
+            </tr>
+            <tr>
+                <th>help ?</th>
+                <td>{{ reclamation.help }}</td>
+            </tr>
+            <tr>
+                <th>Qui</th>
+                <td>{{ reclamation.qui }}</td>
+            </tr>
+            <tr>
+                <th>Seul ?</th>
+                <td>{{ reclamation.seul }}</td>
+            </tr>
+            <tr>
+                <th>contact</th>
+                <td>{{ reclamation.contact }}</td>
+            </tr>
+            
         </tbody>
     </table>
 

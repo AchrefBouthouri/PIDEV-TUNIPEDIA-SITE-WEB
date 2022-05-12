@@ -1,16 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reclamation index{% endblock %}
+{% block title %}Reclamation list{% endblock %}
 
-{% block body %}
-    <h1>Reclamation index</h1>
+{% block content %}
+    <h1>Reclamation list</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Text</th>
+                <th>help</th>
+                <th>qui?</th>
+                <th>seul?</th>
+                <th>contact</th>
                 <th>actions</th>
+
+
             </tr>
         </thead>
         <tbody>
@@ -18,6 +24,10 @@
             <tr>
                 <td>{{ reclamation.id }}</td>
                 <td>{{ reclamation.Text }}</td>
+                 <td>{{ reclamation.help }}</td>
+                  <td>{{ reclamation.qui }}</td>
+                   <td>{{ reclamation.seul }}</td>
+                    <td>{{ reclamation.contact }}</td>
                 <td>
                     <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}">show</a>
                     <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">edit</a>

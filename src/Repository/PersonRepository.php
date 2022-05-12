@@ -45,6 +45,17 @@ class PersonRepository extends ServiceEntityRepository
         }
     }
 
+         /**
+     * @return Person[]
+     */
+    public function findUser($sujet){
+        return $this->createQueryBuilder('Person')
+            ->andWhere('Person.FullName LIKE :sujet or Person.Email LIKE :sujet')
+            ->setParameter('sujet', '%'.$sujet.'%')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Person[] Returns an array of Person objects
     //  */

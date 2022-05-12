@@ -1,0 +1,23 @@
+{% for client in clients %}
+	<tr>
+    <td>{{ client.FullName }}</td>
+		<td>{{ client.Email }}</td>
+		<td>{{ client.Role }}</td>
+		<td>{{ client.Gender }}</td>
+		<td>{{ client.Nationalite }}</td>
+		<td>{{ client.Balance }}</td>
+		<td>{{ client.IsPartner ? 'Yes':'No' }}</td>
+		<td>{{ client.HasPlaces ? 'Yes':'No'}}</td>
+
+		<td>
+			<a href="{{ path('app_person_crud_delete', {'id': client.Id}) }}">
+				<button class="btn btn-primary btn-lg text-white mb-0 me-0">
+					<i class="icon-trash"></i>Delete</button>
+			</a>
+		</td>
+	</tr>
+{% else %}
+	<tr>
+		<td colspan="15">no records found</td>
+	</tr>
+{% endfor %}

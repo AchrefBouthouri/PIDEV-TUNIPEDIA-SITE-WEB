@@ -93,7 +93,7 @@ class PlaceController extends AbstractController
         ]);
     }
     /**
-     * @Route("/ShowBack", name="app_place_index", methods={"GET"})
+     * @Route("/ShowBack", name="showPlaces", methods={"GET"})
      */
     public function index1(PlaceRepository $placeRepository): Response
     {
