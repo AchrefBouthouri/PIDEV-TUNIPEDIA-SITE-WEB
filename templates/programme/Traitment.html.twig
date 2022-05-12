@@ -1,0 +1,52 @@
+{% extends 'baseshow.html.twig' %}
+{% block body %}
+
+    <section class="post">
+        <header class="major">
+        </header>
+        <div id="wrap">
+            <ul class="navbar">
+                
+                <li>
+                    <a href="#">Trie</a>
+                    <ul>
+                        
+                        <li><a href="{{ path('order_By_name')}}">Trie par nom</a></li>
+                        
+                        
+                    </ul>
+                </li>
+  
+
+            </ul>
+        </div>
+        <div class="section-content">
+
+
+    <table class="table" >
+        <thead>
+            <tr>
+			<th>Name</th>
+			<th>Prix</th>
+			<th>Description</th>
+			
+		</tr>
+		{% for p in programmes %}
+			<tbody>
+				<tr>
+					
+					<td>{{ p.Name }}</td>
+                    <td>{{ p.prix }}</td>
+					<td>{{ p.Description }}</td>
+					
+				</tr>
+			</tbody>
+
+		</tr>
+
+        </tbody>
+
+    {% endfor %}
+   
+</div>
+{% endblock %}

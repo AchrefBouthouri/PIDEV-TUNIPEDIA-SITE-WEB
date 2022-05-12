@@ -43,14 +43,11 @@ class Programme
     private $date;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Person::class, inversedBy="programme")
+     * @ORM\ManyToOne(targetEntity=Person::class, inversedBy="Programme")
      */
     private $createdby;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Place::class, mappedBy="programme")
-     */
-    private $places;
+  
 
     /**
      * @ORM\Column(type="float")
@@ -117,35 +114,10 @@ class Programme
         return $this;
     }
 
-    /**
-     * @return Collection<int, place>
-     */
-    public function getPlaces(): Collection
-    {
-        return $this->places;
-    }
+   
+    
 
-    public function addPlace(place $place): self
-    {
-        if (!$this->places->contains($place)) {
-            $this->places[] = $place;
-            $place->setProgramme($this);
-        }
-
-        return $this;
-    }
-
-    public function removePlace(place $place): self
-    {
-        if ($this->places->removeElement($place)) {
-            // set the owning side to null (unless already changed)
-            if ($place->getProgramme() === $this) {
-                $place->setProgramme(null);
-            }
-        }
-
-        return $this;
-    }
+   
 
     public function getPrix(): ?float
     {

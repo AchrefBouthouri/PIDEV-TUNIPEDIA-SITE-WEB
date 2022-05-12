@@ -1,0 +1,51 @@
+<div>TuniPedia</div>
+
+<center>
+	<h1>
+		voici la liste des programmes
+	</h1>
+</center>
+
+<style>
+	body {
+		font: normal 12px / 20 PX "Liberation sans", Arial, Helvetica, sans-serif;
+		color: #585858;
+	}
+	img {
+		width: 300px;
+		margin: 10px;
+		border: solid 5px #E8E8E8;
+
+	}
+</style>
+
+
+<div class="card-body table-responsive p-0">
+
+
+	<table class="table table-striped" style="width:100%;" border="1">
+
+		<tr>
+			<th>Name</th>
+			<th>Prix</th>
+			<th>Description</th>
+			
+		</tr>
+		{% for p in programmes %}
+			<tbody>
+				<tr>
+					
+					<td>{{ p.Name }}</td>
+                    <td>{{ p.prix }}</td>
+					<td>{{ p.Description }}</td>
+					
+				</tr>
+			</tbody>
+
+		</tr>
+	</tbody>
+{% else %}
+	<tr>
+		<td colspan="15">no records found</td>
+	</tr>
+{% endfor %}</table></div>

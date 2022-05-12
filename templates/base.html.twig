@@ -236,6 +236,30 @@
 				</footer>
 
 			{% endblock %}
-		</body>
+		<script>
+	$(document).ready(function () {
+var currentRequest = null;
+$("#searchyoussef").keyup(function (e) {
+var value = $(this).val();
+if (currentRequest != null) {
+currentRequest.abort();
+}
+currentRequest = $.ajax({
+
+url: "{{ path('Searchy') }}",
+type: 'GET',
+data: {
+'searchValue': value
+},
+
+success: function (retour) {
+$('#tableac').html(retour);
+
+}
+});
+return false;
+});
+});
+</script>
 	</body>
 </html>

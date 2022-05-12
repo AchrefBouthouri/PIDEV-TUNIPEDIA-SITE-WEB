@@ -20,6 +20,17 @@ class ProgrammeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Programme::class);
     }
+      /**
+     * @return Programme[]
+     */
+    public function findprg($sujet){
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.name LIKE :sujet')
+            ->setParameter('sujet', '%'.$sujet.'%')
+            ->getQuery()
+            ->getResult();
+
+    }
 
     /**
      * @throws ORMException
@@ -44,7 +55,8 @@ class ProgrammeRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
-
+   
+    
     // /**
     //  * @return Programme[] Returns an array of Programme objects
     //  */
@@ -73,4 +85,11 @@ class ProgrammeRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function order_By_Nom() 
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.name', 'ASC')
+            ->getQuery()->getResult();
+    }
 }

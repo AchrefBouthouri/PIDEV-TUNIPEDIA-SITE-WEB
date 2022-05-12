@@ -1,0 +1,11 @@
+
+				{% for i in programmes %}
+				<tr>
+                 <td>{{ i.Name }}</td>
+        		<td>{{ i.Prix }}</td>
+	    		<td>{{ i.Description }}</td>
+				<td><a href="{{ path('app_programme_show', {'id': i.id}) }}">show</a></td>
+				</tr>
+				{% endfor %}
+			</div>
+		</div>

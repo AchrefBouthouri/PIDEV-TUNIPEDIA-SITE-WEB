@@ -3,11 +3,12 @@
 {% block title %}Edit program{% endblock %}
 
 {% block content %}
-    <h1>Edit program</h1>
 
     {{ include('programme/_form.html.twig', {'button_label': 'Update'}) }}
+      {{ include('programme/_delete_form.html.twig') }}
 
-    <a href="{{ path('app_programme_index') }}">back to list</a>
+    <a href="{{ path('app_programme_index') }}" style=" background-color: #ebe8e3;padding: 6px 21px 10px 15px;border-radius: 5px; margin-left: 203px;  ">Back</a>
 
-    {{ include('programme/_delete_form.html.twig') }}
+
+  
 {% endblock %}
