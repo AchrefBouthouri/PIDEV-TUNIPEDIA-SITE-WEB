@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-
+use VictorPrdh\RecaptchaBundle\Form\ReCaptchaType;
 class InscriptionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -18,14 +18,16 @@ class InscriptionType extends AbstractType
             ->add('FullName')
             ->add('Email')
             ->add('Password',PasswordType::class)
-            ->add('Gender',ChoiceType::class,[
-                'choices'  => [
-                    'Male' => "Male",
-                    'Female' => "Female",
-                ],
-                'multiple'=>false,
-                'expanded'=>false])
-            ->add('Avatar', FileType::class,['required'=>false])
+            // ->add('Gender',ChoiceType::class,[
+            //     'choices'  => [
+            //         'Male' => "Male",
+            //         'Female' => "Female",
+            //     ],
+            //     'multiple'=>false,
+            //     'expanded'=>false])
+            // ->add('Avatar', FileType::class,['required'=>false])
+            ->add('captcha',ReCaptchaType::class)
+
  
         ;
     }

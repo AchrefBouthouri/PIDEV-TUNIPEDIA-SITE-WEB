@@ -24,22 +24,26 @@
                             <div >{{ form_row(form.FullName,{"attr":{'class':'form-control form-control-lg'},"label":"FullName"}) }}</div>
                             <div >{{ form_row(form.Email,{"attr":{'class':'form-control form-control-lg'},"label":"Email"}) }}</div>
                             <div >{{ form_row(form.Password,{"attr":{'class':'form-control form-control-lg'},"label":"Password"}) }}</div>
-                            <div >{{ form_row(form.Gender,{"attr":{'class':'form-control form-control-lg'},"label":"Gender"}) }}</div>
-                            <div >{{ form_row(form.Avatar,{"attr":{'class':'form-control form-control-lg'},"label":"Avatar"}) }}</div>
+                            {# <div >{{ form_row(form.Gender,{"attr":{'class':'form-control form-control-lg'},"label":"Gender"}) }}</div> #}
+                            {# <div >{{ form_row(form.Avatar,{"attr":{'class':'form-control form-control-lg'},"label":"Avatar"}) }}</div> #}
+                            <div style="margin-top:10px"></div>
+                            <div>
+                            {{form_errors(form.captcha)}}
+                            {{ form_row(form.captcha,{"attr":{'class':'form-control form-control-lg'},"label":"Captcha"}) }}
+                            
+                            </div>
 
-                            {#<div >{{ form_row(form.captcha,{"attr":{'class':'form-control form-control-lg'},"label":"Captcha"}) }}</div>#}
 
 
-
-
+                        <div style="margin-bottom:-30px"></div>
                         </div>
-                        <input type="submit" class="btn btn-primary1" value="Enregistrer">
+                        <input type="submit" class="btn btn-primary1" value="Enregistrer" style="margin-bottom:-30px">
+                        <p  class="text-center text-muted mt-5 mb-0">vous avez un compte ? <a href="{{ path ('login') }}" class="fw-bold text-body"><u>Se connecter</u></a></p>
+                        <div style="margin-bottom:30px"></div>
+
                     </div>
-                        <p class="text-center text-muted mt-5 mb-0">vous avez un compte ? <a href="{{ path ('login') }}" class="fw-bold text-body"><u>Se connecter</u></a></p>
 
-                        <div >
-                            {{ form_widget(form) }}
-                        </div>
+                    
 
 
                     {{ form_end(form) }}

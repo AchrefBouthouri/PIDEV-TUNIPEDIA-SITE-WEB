@@ -4,11 +4,11 @@ namespace App\Form;
 
 use App\Entity\Person;
 use Symfony\Component\Form\AbstractType;
+use App\Form\AttachementType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EditProfileType extends AbstractType
@@ -31,8 +31,8 @@ class EditProfileType extends AbstractType
                 ],
                 'multiple'=>false,
                 'expanded'=>false])
-            // ->add('firstname', TextType::class)
-            ->add('Enregistrer', SubmitType::class)
+                ->add('Avatar', AttachementType::class)
+                ->add('Enregistrer', SubmitType::class)
         ;
     }
 

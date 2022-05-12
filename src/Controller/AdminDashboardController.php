@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Attachement;
 use App\Repository\PlaceRepository;
 use App\Entity\Place;
 use App\Form\PlaceType;
@@ -26,6 +27,8 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
+use Cloudinary\Api\Upload\UploadApi;
+
 
 
 class AdminDashboardController extends AbstractController
@@ -39,7 +42,7 @@ class AdminDashboardController extends AbstractController
             'controller_name' => 'AdminDashboardController',
         ]);
     }
-     /**
+    /**
      * @Route("/login", name="login")
      */
     public function login(Request $request, SessionInterface $session, UserPasswordEncoderInterface $encoder): Response
@@ -51,7 +54,7 @@ class AdminDashboardController extends AbstractController
         if ($connexion->isSubmitted() && $connexion->isValid()) {
             $verifuser = $userRepository->findOneBy(array('Email' => $useronline->getEmail()));
             if (is_null($verifuser) || password_verify($useronline->getPassword(), $verifuser->getPassword()) == false) {
-                $this->addFlash('Warning','Email ou mot de passe incorrect');
+                $this->addFlash('Warning', 'Email ou mot de passe incorrect');
                 //return $this->render('user/message.html.twig', ['message' => 'Email ou mot de passe incorrect']);
             } else {
                 if ($verifuser->getRole() == "client") {
@@ -61,10 +64,12 @@ class AdminDashboardController extends AbstractController
 
                     $session->set('user', $verifuser);
                     return $this->redirectToRoute('allusers');
+                } elseif ($verifuser->getRole() == "owner") {
+
+                    $session->set('user', $verifuser);
+                    return $this->redirectToRoute('users');
                 }
-
             }
-
         }
         return $this->render('login.html.twig', [
             'connexion' => $connexion->createView(),
@@ -77,6 +82,7 @@ class AdminDashboardController extends AbstractController
     public function signup(Request $request, SessionInterface $session, ManagerRegistry $objectManager, UserPasswordEncoderInterface $encoder, TokenGeneratorInterface $tokenGenerator): Response
     {
         $utilisateur = new Person();
+        $avatar = new Attachement();
         $form = $this->createForm(InscriptionType::class, $utilisateur); //bech twarik les champ l moujoudin
         $form->handleRequest($request);  //recuperer les valeur
 
@@ -84,12 +90,18 @@ class AdminDashboardController extends AbstractController
             $utilisateur = $form->getData();
             $passwordCrypte = $encoder->encodePassword($utilisateur, $utilisateur->getPassword());
             $utilisateur->setPassword($passwordCrypte);
-            $utilisateur->setRole('client');
+            $utilisateur->setRole('owner');
             $utilisateur->setIsPartner(false);
             $now = new DateTime();
             $now->getTimestamp();
             $utilisateur->setCreatedAt($now);
-            //$utilisateur->setStatus(true);
+
+            //$image = $form->get('Avatar')->getData();
+            //print_r($image);
+            $data = (new UploadApi())->upload('default.png');
+            $avatar->setName("png");
+            $avatar->setPath($data["url"]);
+            $utilisateur->setAvatar($avatar);
             $em = $this->getDoctrine()->getManager();
             $em->persist($utilisateur);
             $em->flush();
@@ -103,142 +115,134 @@ class AdminDashboardController extends AbstractController
     }
 
 
-        /**
+    /**
      * @Route("/admin/dashboard/users", name="allusers")
      */
-    public function AllUsers(SessionInterface $session,PersonRepository  $PersonRepository): Response
-    
+    public function AllUsers(SessionInterface $session, PersonRepository  $PersonRepository): Response
+
     {
         $utilisateur = $session->get('user');
         if (is_null($utilisateur)) {
             return $this->redirectToRoute('login');
-        }
-            elseif ($utilisateur->getRole() == "client") {
-                return $this->redirectToRoute('app_home');
-            } elseif ($utilisateur->getRole() == "admin") {
-                return $this->render('admin_dashboard/AllUsersSearch.html.twig',[
-                    'clients' => $PersonRepository->findAll(),
-                ]);
+        } elseif ($utilisateur->getRole() == "client") {
+            return $this->redirectToRoute('app_home');
+        }elseif ($utilisateur->getRole() == "owner") {
+            return $this->redirectToRoute('users');
+        } elseif ($utilisateur->getRole() == "admin") {
+            return $this->render('admin_dashboard/AllUsersSearch.html.twig', [
+                'clients' => $PersonRepository->findAll(),
+            ]);
         }
     }
 
-            /**
+    /**
      * @Route("/admin/dashboard/reservations", name="allreservations")
      */
-    public function AllReservations(SessionInterface $session,ReservationRepository  $ReservationRepository): Response
-    
+    public function AllReservations(SessionInterface $session, ReservationRepository  $ReservationRepository): Response
+
     {
         $utilisateur = $session->get('user');
         if (is_null($utilisateur)) {
             return $this->redirectToRoute('login');
-        }
-            elseif ($utilisateur->getRole() == "client") {
-                return $this->redirectToRoute('app_home');
-            } elseif ($utilisateur->getRole() == "admin") {
-                return $this->render('admin_dashboard/AllReservations.html.twig',[
-                    'Reservations' => $ReservationRepository->findAll(),
-                ]);
+        } elseif ($utilisateur->getRole() == "client") {
+            return $this->redirectToRoute('app_home');
+        } elseif ($utilisateur->getRole() == "admin") {
+            return $this->render('admin_dashboard/AllReservations.html.twig', [
+                'Reservations' => $ReservationRepository->findAll(),
+            ]);
         }
     }
-    
-            /**
+
+    /**
      * @Route("/admin/dashboard/reclamations", name="allreclamations")
      */
-    public function AllReclamations(SessionInterface $session,ReclamationRepository  $ReclamationRepository): Response
-    
+    public function AllReclamations(SessionInterface $session, ReclamationRepository  $ReclamationRepository): Response
+
     {
         $utilisateur = $session->get('user');
         if (is_null($utilisateur)) {
             return $this->redirectToRoute('login');
-        }
-            elseif ($utilisateur->getRole() == "client") {
-                return $this->redirectToRoute('app_home');
-            } elseif ($utilisateur->getRole() == "admin") {
-                return $this->render('admin_dashboard/AllReclamations.html.twig',[
-                    'Reclamations' => $ReclamationRepository->findAll(),
-                ]);
+        } elseif ($utilisateur->getRole() == "client") {
+            return $this->redirectToRoute('app_home');
+        } elseif ($utilisateur->getRole() == "admin") {
+            return $this->render('admin_dashboard/AllReclamations.html.twig', [
+                'Reclamations' => $ReclamationRepository->findAll(),
+            ]);
         }
     }
-                /**
+    /**
      * @Route("/admin/dashboard/offers", name="alloffers")
      */
-    public function AllOffers(SessionInterface $session,OfferRepository  $OfferRepository): Response
-    
+    public function AllOffers(SessionInterface $session, OfferRepository  $OfferRepository): Response
+
     {
         $utilisateur = $session->get('user');
         if (is_null($utilisateur)) {
             return $this->redirectToRoute('login');
-        }
-            elseif ($utilisateur->getRole() == "client") {
-                return $this->redirectToRoute('app_home');
-            } elseif ($utilisateur->getRole() == "admin") {
-                return $this->render('admin_dashboard/AllOffer.html.twig',[
-                    'Offers' => $OfferRepository->findAll(),
-                ]);
+        } elseif ($utilisateur->getRole() == "client") {
+            return $this->redirectToRoute('app_home');
+        } elseif ($utilisateur->getRole() == "admin") {
+            return $this->render('admin_dashboard/AllOffer.html.twig', [
+                'Offers' => $OfferRepository->findAll(),
+            ]);
         }
     }
 
-                    /**
+    /**
      * @Route("/admin/dashboard/events", name="allevents")
      */
-    public function Allevents(SessionInterface $session,EventRepository  $EventRepository): Response
-    
+    public function Allevents(SessionInterface $session, EventRepository  $EventRepository): Response
+
     {
         $utilisateur = $session->get('user');
         if (is_null($utilisateur)) {
             return $this->redirectToRoute('login');
-        }
-            elseif ($utilisateur->getRole() == "client") {
-                return $this->redirectToRoute('app_home');
-            } elseif ($utilisateur->getRole() == "admin") {
-                return $this->render('admin_dashboard/AllEvents.html.twig',[
-                    'Events' => $EventRepository->findAll(),
-                ]);
+        } elseif ($utilisateur->getRole() == "client") {
+            return $this->redirectToRoute('app_home');
+        } elseif ($utilisateur->getRole() == "admin") {
+            return $this->render('admin_dashboard/AllEvents.html.twig', [
+                'Events' => $EventRepository->findAll(),
+            ]);
         }
     }
-                       /**
+    /**
      * @Route("/admin/dashboard/evaluations", name="allevaluations")
      */
-    public function Allevaluations(SessionInterface $session,EvaluationRepository  $EvaluationRepository): Response
-    
+    public function Allevaluations(SessionInterface $session, EvaluationRepository  $EvaluationRepository): Response
+
     {
         $utilisateur = $session->get('user');
         if (is_null($utilisateur)) {
             return $this->redirectToRoute('login');
-        }
-            elseif ($utilisateur->getRole() == "client") {
-                return $this->redirectToRoute('app_home');
-            } elseif ($utilisateur->getRole() == "admin") {
-                return $this->render('admin_dashboard/AllEvaluations.html.twig',[
-                    'Evaluations' => $EvaluationRepository->findAll(),
-                ]);
+        } elseif ($utilisateur->getRole() == "client") {
+            return $this->redirectToRoute('app_home');
+        } elseif ($utilisateur->getRole() == "admin") {
+            return $this->render('admin_dashboard/AllEvaluations.html.twig', [
+                'Evaluations' => $EvaluationRepository->findAll(),
+            ]);
         }
     }
 
-            /**
+    /**
      * @Route("/logout", name="logout")
      */
     public function logout(SessionInterface $session): Response
-    
-    {
-       $session->clear();
 
-            return $this->redirectToRoute('login');
+    {
+        $session->clear();
+
+        return $this->redirectToRoute('login');
     }
 
     /**
      * @Route("/Person/Search", name="Search")
      */
-    public function Search(PersonRepository  $PersonRepository,Request $request): Response
-    
-    {
-                $requestString=$request->get('searchValue');
-                return $this->render('admin_dashboard/Search.html.twig',[
-                    'clients' => $PersonRepository->findUser($requestString),
-                ]);
-        }
-    
+    public function Search(PersonRepository  $PersonRepository, Request $request): Response
 
-    
-    
+    {
+        $requestString = $request->get('searchValue');
+        return $this->render('admin_dashboard/Search.html.twig', [
+            'clients' => $PersonRepository->findUser($requestString),
+        ]);
+    }
 }

@@ -24,9 +24,11 @@
 				<button data-target="example-sidenav" class="sidenav-trigger">
 					<i class="fas fa-times"></i>
 				</button>
-				<img class="logo dropshadow-1" src="your_img_path" alt="Logo"/>
+				 {# {% if person existe %}  #}
+					 {# <figure><img src="{{ asset(person.Avatar.Path)}}" alt=" " class="img-responsive"></figure>  #}
+				{# {% endif %} #}
 			</div>
-			<a href="#" class="sidenav-link active">Mon Profil</a>
+			<a href="{{path('users')}}" class="sidenav-link active">Mon Profil</a>
 			<a href="#" class="sidenav-link">Mes Endroits</a>
 			<a href="#" class="sidenav-link">Mes Evenements</a>
 			<a href="#" class="sidenav-link">Mes Offers</a>

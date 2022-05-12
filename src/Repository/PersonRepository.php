@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Attachement;
 use App\Entity\Person;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
@@ -73,17 +74,17 @@ class PersonRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Person
+    
+    public function findAvatarByUser($value): ?Attachement
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
+        return $this->createQueryBuilder('Attachement')
+            ->andWhere('Attachement.id = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+    
 
     // public function Connexion($value): ?Person
     // {

@@ -76,8 +76,29 @@ window.print();
 																			<th>Actions</th>
 																		</tr>
 																	</thead>
-																	{% for p in clients %}
-																		<tbody id="tableac"></tbody>
+																	{% for client in clients %}
+																		<tbody id="tableac">
+																		 <tr>
+                                                                               
+                                                                                <td>{{ client.FullName }}</td>
+                                                                                {# {% if client.image|length > 0 %}
+                                                                                    <td><img src="{{ asset('uploads/'~ client.image ) }}" width="250" height="150"></td>
+                                                                                {% else %}
+                                                                                    <td><img src="{{ asset('uploads/'~ "Not found.jpg" ) }}" width="250" height="150"></td>
+                                                                                {% endif %} #}
+                                                                                <td>{{ client.Email }}</td> 
+                                                                                <td>{{ client.Role }}</td>
+                                                                                <td>{{ client.Gender }}</td>
+                                                                                <td>{{ client.Nationalite }}</td>
+                                                                                <td>{{ client.Balance ? '0.0 DT' :'0.0 DT'}}</td>
+                                                                                <td>{{ client.IsPartner ? 'Yes' : 'No' }}</td>
+                                                                                <td>{{ client.HasPlaces ? 'Yes' : 'No' }}</td>
+                                                                                {# <td>{{ client.CreatedAt }}</td> #}
+                                                                                <td>
+                                                                                     <a href="{{ path('app_person_crud_delete', {'id': client.Id}) }}"><button class="btn btn-primary btn-lg text-white mb-0 me-0"><i class="icon-trash"></i>Delete</button></a>
+                                                                                     {# {{ include('person_crud/_delete_form.html.twig') }} #}
+                                                                                </td>
+                                                                            </tr></tbody>
 																	{% endfor %}
                                                                     	<ul class="navbar-nav ms-auto">
 																		<li class="nav-item">
