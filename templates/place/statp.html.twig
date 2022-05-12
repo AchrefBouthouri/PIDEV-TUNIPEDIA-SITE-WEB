@@ -1,0 +1,96 @@
+{% extends 'admin.html.twig' %}
+
+{% block content %}
+	<section class="w3ls-section contact py-5">
+		<div class="container py-sm-3">
+			<div class="w3ls-title">
+				<h2 class="heading text-center mb-sm-5 mb-4">Statistics</h2>
+			</div>
+		</div>
+
+		<div class="card-body table-responsive p-0">
+
+
+			<table class="center" style="margin-left: 50px;" border="0">
+
+				<tr>
+					<td>Statistics With Type</td>
+					<td>Statistics With Status</td>
+
+				</tr>
+				<tbody>
+					<tr>
+						<td>
+							<canvas id="monGraph" style="max-width: 700px;max-height:200px;margin-right:700px;"></canvas>
+						</td>
+						<td>
+							<canvas id="monGraph1" style="max-width: 700px;max-height:200px;margin-right:150px;"></canvas>
+						</td>
+					</tr>
+				</tbody>
+
+			</table>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@3.1.1/dist/chart.min.js" integrity="sha256-lISRn4x2bHaafBiAb0H5C7mqJli7N0SH+vrapxjIz3k=" crossorigin="anonymous"></script>
+		<script>
+			let ctx = document.querySelector("#monGraph")
+let ctx1 = document.querySelector("#monGraph1")
+let graph = new Chart(ctx, {
+type: "pie",
+data: {
+labels: [
+'Public', 'Private'
+],
+datasets: [
+{
+label: 'Nombre d Place selon type ',
+data: {{ nbr|raw }},
+backgroundColor: [
+'red',
+'blue',
+'yellow',
+'green',
+'purple',
+'orange'
+]
+}
+]
+},
+options: {
+title: {
+display: true,
+text: 'Répartiton place par type'
+},
+legend: {
+position: 'bottom'
+}
+}
+})
+let graph1 = new Chart(ctx1, {
+type: "pie",
+data: {
+labels: [
+'Active', 'Pending'
+],
+datasets: [
+{
+label: 'Nombre d Place selon etat ',
+data: {{ nbrr|raw }},
+backgroundColor: ['yellow', 'green', 'purple', 'orange']
+}
+]
+},
+options: {
+title: {
+display: true,
+text: 'Répartiton place par etat'
+},
+legend: {
+position: 'bottom'
+}
+}
+})
+		</script>
+
+	{% endblock %}

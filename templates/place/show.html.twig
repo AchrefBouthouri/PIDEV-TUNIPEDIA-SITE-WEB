@@ -1,66 +1,188 @@
 {% extends 'base.html.twig' %}
+{% block headw %}
 
-{% block title %}Place{% endblock %}
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>OpenStreetMap</title>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css"/>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
 
-{% block body %}
-    <h1>Place</h1>
+	<link
+	rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css">
+	<!-- CSS -->
+	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- ===============================================-->
+	<!--    Document Title-->
+	<!-- ===============================================-->
+		<title>
+	TuniPedia
+	</title>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ place.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ place.Name }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ place.Description }}</td>
-            </tr>
-            <tr>
-                <th>Adress</th>
-                <td>{{ place.Adress }}</td>
-            </tr>
-            <tr>
-                <th>City</th>
-                <td>{{ place.City }}</td>
-            </tr>
-            <tr>
-                <th>PostalCode</th>
-                <td>{{ place.PostalCode }}</td>
-            </tr>
-            <tr>
-                <th>Latitude</th>
-                <td>{{ place.Latitude }}</td>
-            </tr>
-            <tr>
-                <th>Longitude</th>
-                <td>{{ place.Longitude }}</td>
-            </tr>
-            <tr>
-                <th>Notice</th>
-                <td>{{ place.Notice }}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ place.Status ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Type</th>
-                <td>{{ place.Type }}</td>
-            </tr>
-            <tr>
-                <th>Views</th>
-                <td>{{ place.Views }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<!-- ===============================================-->
+	<!--    Favicons-->
+	<!-- ===============================================-->
+	<!-- ===============================================-->
+	<!--    Stylesheets-->
+<!-- ===============================================--> <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Volkhov:wght@700&amp;display=swap"rel="stylesheet"> {% endblock %}
 
-    <a href="{{ path('app_place_index') }}">back to list</a>
 
-    <a href="{{ path('app_place_edit', {'id': place.id}) }}">edit</a>
+{% block title %}Place
+{% endblock %}
 
-    {{ include('place/_delete_form.html.twig') }}
+{% block content %}
+<div class="container">
+<div class="row">
+    <div class="col-12">
+      	<h2 class="heading text-center mb-sm-5 mb-4">{{place.Name}}</h2>s
+    </div>
+	</div>
+
+  <div class="row">
+    <div class="col-6">
+	{% if place.Attachement is defined %}
+			<figure><img src="{{ asset('Attachements/')~place.Attachement.Name }}" alt=" " class="img-responsive" height="300" width="250"></figure>
+		{% endif %}
+
+    </div>
+    <div class="col-6">
+<table class="table">
+		<tbody>
+			<tr>
+				<th>Description</th>
+				<td>{{ place.Description }}</td>
+			</tr>
+			<tr>
+				<th>Adress</th>
+				<td>{{ place.Adress }}</td>
+			</tr>
+			<tr>
+				<th>city</th>
+				<td>{{ place.City }}</td>
+			</tr>
+			<tr>
+				<th>PostalCode</th>
+				<td>{{ place.PostalCode }}</td>
+			</tr>
+			<tr>
+				<th>Latitude</th>
+				<td>{{ place.Latitude }}</td>
+
+			</tr>
+			<tr>
+				<th>Longitude</th>
+				<td>{{ place.Longitude }}</td>
+
+			</tr>
+			<tr>
+				<th>Type</th>
+				<td>{{ place.Type }}</td>
+			</tr>
+		</tbody>
+	</table>
+    </div>
+  </div>
+</div>
+
+
+
+
+	<form>
+		{# <input id="impression" class="js-programmatic-set-val btn btn-outline-primary mr-1 mb-1s" name="impression" type="button" onclick="imprimer_page()" value="Print this page" /> #}
+	</form>
+	
+	<div id="maCarte" style="height:250px; width:900px; border:3px solid black; margin-left:300px; margin-bottom:100px"></div>
+
+
+	<!-- Fichiers Javascript -->
+	<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
+	<script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+	<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+	<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+
+	<script>
+		var tableauMarqueurs = [];
+
+// On initialise la carte
+var carte = L.map('maCarte').setView([
+33.8869, 9.5375
+], 6);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+maxZoom: 18,
+attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' + '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' + 'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+id: 'mapbox.streets'
+}).addTo(carte);
+var One = new L.Icon({
+iconUrl: 'red-marker.png',
+shadowUrl: 'marker-shadow.png',
+iconSize: [
+25, 41
+],
+iconAnchor: [
+12, 41
+],
+popupAnchor: [
+1, -34
+],
+shadowSize: [41, 41]
+});
+var Two = new L.Icon({
+iconUrl: 'green-marker.png',
+shadowUrl: 'marker-shadow.png',
+iconSize: [
+25, 41
+],
+iconAnchor: [
+12, 41
+],
+popupAnchor: [
+1, -34
+],
+shadowSize: [41, 41]
+});
+
+var marqueurs = L.markerClusterGroup();
+
+
+var place = {{ placejson|json_encode|raw }};
+const places = JSON.parse(place);
+console.log(places);
+var x;
+// On parcourt les différentes villes
+
+if (places.Type == "Public") {
+x = Two;
+} else 
+x = One;
+
+
+// On crée le marqueur et on lui attribue une popup
+var marqueur = L.marker([
+places.Latitude, places.Longitude
+], {icon: x}); // .addTo(carte); Inutile lors de l'utilisation des clusters
+marqueur.bindPopup('<img src="{{ asset('Attachements/')~place.Attachement.Name }}" alt=" " class="img-responsive" >' + "<p>" + places.Name + "</p>");
+marqueurs.addLayer(marqueur);
+// On ajoute le marqueur au groupe
+// On ajoute le marqueur au tableau
+tableauMarqueurs.push(marqueur);
+
+// On regroupe les marqueurs dans un groupe Leaflet
+var groupe = new L.featureGroup(tableauMarqueurs);
+
+// On adapte le zoom au groupe
+carte.fitBounds(groupe.getBounds().pad(0.5));
+
+carte.addLayer(marqueurs);
+L.Control.geocoder().addTo(carte);
+L.Routing.control({geocoder: L.Control.Geocoder.nominatim()}).addTo(carte)
+	</script>
+
+
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+	<script src="{{ asset('vendorss/fontawesome/all.min.js')}}"></script>
+	<script src="{{ asset('assetss/js/theme.js')}}"></script>
+
+
 {% endblock %}

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PlaceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert ;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -31,6 +32,7 @@ class Place
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min=5,max=30,minMessage="il faut au moin 5 carac",maxMessage="il faut au max 30 carac")
+     * @Groups("Places")
      */
     private $Name;
 
@@ -43,6 +45,7 @@ class Place
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
+     * @Groups("Places")
      */
     private $Adress;
 
@@ -59,17 +62,19 @@ class Place
     private $PostalCode;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="float", length=255)
+     * @Groups("Places")
      */
     private $Latitude;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="float", length=255)
+     * @Groups("Places")
      */
     private $Longitude;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Category::class)
      */
     private $Category;
 
@@ -85,6 +90,7 @@ class Place
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("Places")
      */
     private $Type;
 
@@ -100,6 +106,7 @@ class Place
 
     /**
      * @ORM\OneToOne(targetEntity=Attachement::class, cascade={"persist","remove"})
+     * @Groups("Places")
      */
     private $Attachement;
 

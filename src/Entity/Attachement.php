@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation\uploadable;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=AttachementRepository::class)
  */
@@ -21,11 +22,12 @@ class Attachement
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("Places")
      */
     private $Name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * 
      */
     private $Path;
