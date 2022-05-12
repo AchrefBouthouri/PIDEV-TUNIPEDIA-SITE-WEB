@@ -84,7 +84,7 @@ class AdminDashboardController extends AbstractController
             $utilisateur = $form->getData();
             $passwordCrypte = $encoder->encodePassword($utilisateur, $utilisateur->getPassword());
             $utilisateur->setPassword($passwordCrypte);
-            $utilisateur->setRole('admin');
+            $utilisateur->setRole('client');
             $utilisateur->setIsPartner(false);
             $now = new DateTime();
             $now->getTimestamp();
