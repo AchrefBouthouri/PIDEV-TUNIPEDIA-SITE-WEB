@@ -1,4 +1,5 @@
 {% for p in places %}
+{% if p.Status == 1 %}
 	<tr>
 		<td>{{ p.id }}</td>
 		<td>{{ p.Name }}</td>
@@ -20,9 +21,10 @@
 		</td>
 	</tr>
 
-
+	{% endif %}
 {% else %}
 	<tr>
 		<td colspan="15">no records found</td>
 	</tr>
+	
 {% endfor %}

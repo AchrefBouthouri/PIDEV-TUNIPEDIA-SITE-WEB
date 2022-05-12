@@ -20,6 +20,12 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Validator\Constraints\Json;
 
 
 class PlaceController extends AbstractController
@@ -156,6 +162,80 @@ class PlaceController extends AbstractController
         
         
     }
+       /**
+      * @Route("/displayPlace", name="display_place")
+      */
+      public function AllPlaceAct(Request $request)
+      {
+              $id = $request->get("id");
+ 
+          $place = $this->getDoctrine()->getManager()->getRepository(Place::class)->findAll();
+          
+          $serializer = new Serializer([new ObjectNormalizer()]);
+          $formatted = $serializer->normalize($place);
+ 
+          return new JsonResponse($formatted);
+ 
+      }
+      /**
+     * @Route("/deleteP/{id}", name="dlplace", methods={"POST"})
+     */
+    public function deleteP($id): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $place = $em->getRepository(Place::class)
+            ->findOneBy(array('id' => $id));
+        $em = $this->getDoctrine()->getManager();
+        $this->getDoctrine()->getManager()->remove($place);
+        $em->remove($place);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($place);
+        return new JsonResponse($formatted);
+    }
+      /**
+      * @Route("/addp", name="addp")
+      * @Method("POST")
+      */
+
+      public function ajouterPlace(Request $request , AttachementRepository $AttachementRepository)
+      {
+          $place = new Place();
+          $Attachement = new Attachement();
+          $Name = $request->query->get("Name");
+          $Description = $request->query->get("Description");
+          $Adress = $request->query->get("Adress");
+          $City = $request->query->get("City");
+          $PostalCode = $request->query->get("PostalCode");
+          $Latitude = $request->query->get("Latitude");
+          $Longitude = $request->query->get("Longitude");
+          $Type = $request->query->get("type");
+          $ImageName = $request->query->get("path");
+          
+          $em = $this->getDoctrine()->getManager();
+ 
+
+          $Attachement->setName($ImageName);
+
+          $place->setName($Name);
+          $place->setDescription($Description);
+          $place->setAdress($Adress);
+          $place->setCity($City);
+          $place->setPostalCode($PostalCode);
+          $place->setLatitude($Latitude);
+          $place->setLongitude($Longitude);
+          $place->setType($Type);
+          $place->setStatus(1);
+          $place->setAttachement($Attachement);
+
+
+          $em->persist($place);
+          $em->flush();
+          $serializer = new Serializer([new ObjectNormalizer()]);
+          $formatted = $serializer->normalize($place);
+          return new JsonResponse($place);
+ 
+      }
         /**
      * @Route("/Browse", name="Browse", methods={"GET"})
      */
@@ -175,7 +255,7 @@ class PlaceController extends AbstractController
     /**
      * @Route("/newFront", name="app_place_new", methods={"GET", "POST"})
      */
-    public function newFront(Request $request, PlaceRepository $placeRepository , AttachementRepository $AttachementRepository): Response
+    public function newFront(Request $request, PlaceRepository $placeRepository , AttachementRepository $AttachementRepository, SerializerInterface $SerializerInterface): Response
     {
         $place = new Place();
         $form = $this->createForm(PlaceType::class, $place);
@@ -195,9 +275,11 @@ class PlaceController extends AbstractController
         }
         $c=$this->getDoctrine()->getRepository(Category::class);
         $Category=$c->findAll();
+        $json = $SerializerInterface -> serialize($place,'json', ['groups' => 'Places']);
         return $this->renderForm('place/new.html.twig', [
             'place' => $place,
             'p' => $form,
+            'placejson' => $json,
             'categories' => $Category,
         ]);
     }
@@ -300,6 +382,7 @@ class PlaceController extends AbstractController
         ]);
 
     }
+    
         /**
      * @Route("/ShowBack/TrierParNomASC", name="TrierParNomASC", methods={"GET"})
      */
@@ -337,5 +420,5 @@ class PlaceController extends AbstractController
 
         return $this->redirectToRoute('app_place_index', [], Response::HTTP_SEE_OTHER);
     }
-     
+
 }

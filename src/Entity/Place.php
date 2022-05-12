@@ -45,6 +45,7 @@ class Place
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
+     * @Groups("Places")
      */
     private $Adress;
 
